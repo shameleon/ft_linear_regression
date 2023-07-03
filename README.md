@@ -14,8 +14,6 @@ Two programs :
 
 `estimatePrice(mileage) = θ0 + (θ1 ∗ mileage)`
 
-
-
 ```mermaid
   graph TD;
       A[import data.csv]--pandas-->B[validate];
