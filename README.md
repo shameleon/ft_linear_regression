@@ -103,7 +103,6 @@ df.plot(x='', y='', kind='scatter')
 df.plot(x='', y='', kind='line')
 plt.show()
 ```
-
 ## Seaborn
 
 ![seaborn : statistical data vizualisation](https://seaborn.pydata.org/)
@@ -133,3 +132,11 @@ mdata <- read.csv("data.csv")
 df <- data.frame(mdata)
 print (mean(df$price))
 ```
+
+### Linear regression in R
+
+![datacamp](https://www.datacamp.com/tutorial/linear-regression-R)
+![sthda](http://www.sthda.com/english/articles/40-regression-analysis/167-simple-linear-regression-in-r/)
+![tutorialspoint](https://www.tutorialspoint.com/r/r_linear_regression.htm)
+![scribbr](https://www.scribbr.com/statistics/linear-regression-in-r/)
+![codeacademy](https://www.codecademy.com/learn/learn-linear-regression-in-r/modules/linear-regression-in-r/cheatsheet)
