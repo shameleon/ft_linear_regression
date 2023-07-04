@@ -1,0 +1,29 @@
+#
+.ONESHELL:
+
+# make alone will run
+.DEFAULT_GOAL := run
+
+PIP = ./venv/bin/pip
+PYTHON = ./venv/bin/pip
+
+setup: requirements.txt
+	pip install -r requirements.txt
+
+run: venv
+	$(PYTHON) ./ft_linear_regression/predict.py
+
+venv: venv/bin/activate
+	source ./venv/bin/activate
+
+venv/bin/activate: requirements.txt
+	python -m venv venv
+	chmod +x ./venv/bin/activate
+	source ./venv/bin/activate
+	$(PIP) install -r requirements.txt
+
+clean:
+	rm -rf __pycache_
+	rm -rf venv
+
+.PHONY: run clean
