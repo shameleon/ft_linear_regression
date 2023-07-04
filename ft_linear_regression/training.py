@@ -8,12 +8,12 @@ class LinearRegressionModel:
     def __init__(self):
         """ """
         self.url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
-        self.data = pd.read_csv(self.url, sep=" ", usecols=['km', 'price'])
+        self.data = pd.read_csv(self.url, sep=",", usecols=['km', 'price'])
         self.x = self.data['km'].to_numpy
         self.y = self.data['price'].to_numpy
         self.arr = self.data[['km', 'price']].to_numpy()
-        self.origin = 10000
-        self.slope = -0.05
+        self.origin = 9000.0
+        self.slope = -0.025
         return None
 
     def plot_data(self):
@@ -29,6 +29,20 @@ class LinearRegressionModel:
         coeffs = {"origin": self.origin, "slope": self.slope}
         return coeffs
 
+    def __str__(self):
+        """https://www.scaler.com/topics/python-str/"""
+        return f'\x1b[6;30;60m Training [ok]\n model : {self.origin} + m * {self.slope}.\x1b[0m'
 
 """
+#https://docs.python.org/3/tutorial/errors.html
+
+for arg in sys.argv[1:]:
+    try:
+        f = open(arg, 'r')
+    except OSError:
+        print('cannot open', arg)
+    else:
+        print(arg, 'has', len(f.readlines()), 'lines')
+        f.close()
+
 """
