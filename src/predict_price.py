@@ -6,17 +6,14 @@ class   PredictPrice:
     def __init__(self, coeffs):
         self.coeffs = coeffs
         self.max_mileage = 500000.0
-        print(self.coeffs['origin'])
-        print(self.coeffs['slope'])
-        #set_max_mileage()
+        self.set_max_mileage()
         #self.loop()
         return None
 
     def set_max_mileage(self):
-        """ price = 0 = t0 + t1 * mileage """
         if coeffs['slope'] != 0:
             self.max_mileage = - self.coeffs['origin'] / self.coeffs['slope']
-        print(self.max_mileage)
+        print("max mileage: ", self.max_mileage)
         return None
 
     def predicted_price(self, mileage: int):
@@ -27,13 +24,6 @@ class   PredictPrice:
         print(price)
         return price
 
-    def loop(self):
-        """ """
-        try:
-            ask_for_mileage()
-        except ValueError:
-            print("Oops!  That was no valid mileage.")
-
     def ask_for_mileage(self):
         """ """
         in_str = input('\x1b[6;30;43m'
@@ -41,35 +31,45 @@ class   PredictPrice:
                     + '\x1b[0m\n')
         if (in_str == "q"):
             raise ValueError
-        val = int(stdin)
-        if (val < 0 ) * (val > self.max_mileage):
+        val = int(in_str)
+        if (val < 0 ) * (float(val) > self.max_mileage):
             raise ValueError
-        price = predicted_price(val)
+        price = self.predicted_price(val)
         print('\x1b[1;30;42m'
             + 'Predicted Price ($):'
             + '\x1b[0m')
         print('{:.2f}'.format(price))
         return None
     
+
+    def loop(self):
+        """ """
+        try:
+            self.ask_for_mileage()
+        except ValueError:
+            print("Oops!  That was no valid mileage.")
+    
     def __str__(self):
-        print ('Predicting price for a given car mileage, based on a trained model :')
-        print ('\x1b[6;30;60m price = {1} + mileage * {2} \x1b[0m',
-                self.coeffs['origin'],
-                self.coeffs['slope'])
-        return None
+        a = self.coeffs['origin']
+        b = self.coeffs['slope']
+        str = f'Predicting price for a given car mileage, based on a trained model.\n'
+        str += f'\x1b[6;30;60m    price = {a} + mileage * {b} \x1b[0m'
+        return str
 
 
 if __name__ == "__main__":
     """training model then predicting"""
     my_model = LinearRegressionModel()
+    coeffs = my_model.get_coeffs()
     for i in range(3):
         try:
-            predict_from_model = PredictPrice(my_model.get_coeffs())
+            predict_from_model = PredictPrice(coeffs)
             print(predict_from_model)
+            predict_from_model.loop()
             break
-        except (RuntimeError):
+        except (RuntimeError, TypeError):
             print("Error : Runtime ")
-        except (TypeError, NameError):
+        except (NameError):
             print("Error : TypeError or NameError ")
         except ValueError:
             print("Oops!  That was no valid mileage.")
