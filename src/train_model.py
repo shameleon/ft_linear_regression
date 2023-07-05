@@ -9,11 +9,12 @@ class LinearRegressionModel:
         """ """
         self.url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
         self.data = pd.read_csv(self.url, sep=",", usecols=['km', 'price'])
+        #self.data.sort_values(by=['km'], inplace=True, ascending=True)
         self.x = self.data['km'].to_numpy
         self.y = self.data['price'].to_numpy
         self.arr = self.data[['km', 'price']].to_numpy()
-        self.origin = 9000.0
-        self.slope = -0.025
+        self.origin = 9000.0 #set to zero
+        self.slope = -0.025 #set to zero
         return None
 
     def plot_data(self):
@@ -34,6 +35,8 @@ class LinearRegressionModel:
         return f'\x1b[6;30;60m Training [ok]\n model : {self.origin} + m * {self.slope}.\x1b[0m'
 
 """
+#https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/
+
 #https://docs.python.org/3/tutorial/errors.html
 
 for arg in sys.argv[1:]:

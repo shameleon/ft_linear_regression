@@ -22,7 +22,7 @@ Two programs :
       C-->D;
 ```
 
-### Bonus part 
+### Bonus part
 • Plotting the data into a graph to see their repartition.
 • Plotting the line resulting from your linear regression into the same graph, to see
 the result of your hard work !
@@ -55,7 +55,6 @@ Here, h is the linear hypothesis model, defined as h=θ0 + θ1x
 ![](https://media.geeksforgeeks.org/wp-content/uploads/Cost-Function.jpg)
 
 from 
-![best link](https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/)
 ![](https://www.geeksforgeeks.org/how-to-implement-a-gradient-descent-in-python-to-find-a-local-minimum/)
 
 https://www.w3schools.com/python/default.asp
