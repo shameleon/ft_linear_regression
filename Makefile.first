@@ -1,11 +1,11 @@
-#
+#  all recipe lines for each target will be provided to a single invocation of the shell
 .ONESHELL:
 
-# make alone will run
+# make
 .DEFAULT_GOAL := run
 
 PIP = ./venv/bin/pip
-PYTHON = ./venv/bin/pip
+PYTHON = ./venv/bin/python
 
 setup: requirements.txt
 	pip install -r requirements.txt

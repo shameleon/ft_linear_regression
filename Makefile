@@ -1,48 +1,45 @@
-PY		= python
-VENV    = ./venv/
-BIN     = $(VENV)bin
-SRC     = ./ft_linear_regression/
+#### virtual environment ####
 
-# run:
-# python $(PWD)/predict.py
+# all recipe lines for each target will be provided to a single invocation of the shell
+.ONESHELL:
 
-# virtual environment
-all: $(VENV)
+# make alone will run
+.DEFAULT_GOAL := $(VENV)
+
+SRC		= ./src/
+
+# virtual environment, pip and python
+VENV		= ./venv/
+V_PIP		= ./venv/bin/pip
+V_PY		= ./venv/bin/python
+V_FLAKE		= ./venv/bin/flake8 
 
 $(VENV): requirements.txt
+	@echo "Installing Virtual Environment"
+	pip install virtualenv
 	virtualenv $(VENV)
-	source $(BIN)/activate
-	pip install --upgrade -r requirements.txt
+	source ./venv/bin/activate
+	$(V_PIP) install --upgrade -r requirements.txt
 
-on: $(VENV)
-	source $(BIN)/activate
+list:
+	$(V_PY) -m pip list
 
-off: $(VENV)
-	source deactivate
+flake:
+	$(V_FLAKE) $(SRC)
 
-test: $(VENV)
-	$(BIN)/pytest
-	py.test tests
-
-flake: $(VENV)
-	flake8 $(SRC)*.py
-
-list: $(VENV)
-	$(PY) -m pip list
+run:
+	$(V_PY) $(SRC)main.py
 
 clean:
-	@echo "Removing virtual environment"
+	@echo "Removing __pycache__ "
 	find . -type d -name "__pycache__" | xargs rm -rf {};
 	find -iname "*.pyc" -delete
-
-fclean: off clean
+	@echo "Removing virtual environment"
 	rm -rf $(VENV)
 
-.PHONY: all on off test flake list clean
+.PHONY: run active off test flake list clean
 
-# https://www.gnu.org/software/make/manual/html_node/index.html#SEC_Contents
-# https://gist.github.com/genyrosk/50196ad03231093b604cdd205f7e5e0d
-# https://venthur.de/2021-03-31-python-makefiles.html
-
-# https://ricardoanderegg.com/posts/makefile-python-project-tricks/
-# https://python-guide-pt-br.readthedocs.io/fr/latest/dev/virtualenvs.html
+#ON:
+#source ./venv/bin/activate
+#OFF:
+#deactivate

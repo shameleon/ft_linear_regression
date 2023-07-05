@@ -1,9 +1,10 @@
-# project setup
+# Project setup
 
-create a virtual environment with Makefile and a requirements.txt File.
+Create a virtual environment with Makefile and a requirements.txt File.
 
-!(pailm.com : environment, testing, ...)[https://paiml.com/docs/home/books/testing-in-python/chapter01-configuring-the-environment/]
-## Virtual Environment
+![pailm.com : environment, testing, ...](https://paiml.com/docs/home/books/testing-in-python/chapter01-configuring-the-environment/)
+
+## installing a Virtual Environment
 
 Python's official documentation says:
 
@@ -23,9 +24,30 @@ create a new project folder, then run:
 ```shell
 cd ft_linear_regression
 virtualenv env
-source env/bin/activate
-pip install pep8
+source ./venv/bin/activate
+./venv/bin/pip install -U -r requirements.txt
+./venv/bin/pip install -U seaborn
+./venv/bin/python -m pip list
 ```
+
+### pip install options : 
+![pip install options](https://pip.pypa.io/en/stable/cli/pip_install/#options)
+```properties pip install -r <file>```
+-r, --requirement <file>
+
+    Install from the given requirements file. This option can be used multiple times.
+
+-U, --upgrade
+
+    Upgrade all specified packages to the newest available version. 
+
+-I, --ignore-installed
+
+    Ignore the installed packages, overwriting them. This can break your system if the existing package is of a different version or was installed with a different package manager!
+
+Run ```shell ./venv/bin/python -m pip check``` to check for any broken requirement(s)
+
+Run ```shell pip freeze > requirements.txt``` to update the Python requirements file.
 
 ![guide to python virtualenv](https://python-guide-pt-br.readthedocs.io/fr/latest/dev/virtualenvs.html)
 ![docs.python.org : venv](https://docs.python.org/fr/3/library/venv.html)
