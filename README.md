@@ -140,3 +140,5 @@ print (mean(df$price))
 ![tutorialspoint](https://www.tutorialspoint.com/r/r_linear_regression.htm)
 ![scribbr](https://www.scribbr.com/statistics/linear-regression-in-r/)
 ![codeacademy](https://www.codecademy.com/learn/learn-linear-regression-in-r/modules/linear-regression-in-r/cheatsheet)
+
+![](https://learningstatisticswithr.com/book/regression.html)

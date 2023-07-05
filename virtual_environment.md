@@ -2,6 +2,7 @@
 
 create a virtual environment with Makefile and a requirements.txt File.
 
+!(pailm.com : environment, testing, ...)[https://paiml.com/docs/home/books/testing-in-python/chapter01-configuring-the-environment/]
 ## Virtual Environment
 
 Python's official documentation says:
