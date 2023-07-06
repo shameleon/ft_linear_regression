@@ -31,13 +31,13 @@ class LinearRegG4G:
         return derivatives
  
     def update_parameters(self, derivatives, learning_rate):
-        self.parameters['m'] = self.parameters['m'] - learning_rate * derivatives['dm']
-        self.parameters['c'] = self.parameters['c'] - learning_rate * derivatives['dc']
+        self.parameters['m'] -= learning_rate * derivatives['dm']
+        self.parameters['c'] -= learning_rate * derivatives['dc']
  
-    def train(self, train_input, train_output, learning_rate, iters):
+    def train(self, train_input, train_output, learning_rate, iters=50):
         #initialize random parameters
         self.parameters['m'] = 0
-        self.parameters['c'] = 0
+        self.parameters['c'] = 0pip3
         self.loss = []
         for i in range(iters):
             # forward propagation

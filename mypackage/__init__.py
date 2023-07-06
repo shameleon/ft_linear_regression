@@ -1,0 +1,2 @@
+from .linear_gression_utils import correlation
+from .linear_gression_utils import normalize
