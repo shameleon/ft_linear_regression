@@ -1,16 +1,13 @@
 # Exceptions
 
-
-
-
 Note:
 
     Good practice : user-defined exceptions placed in a separate file, separately as exceptions.py or errors.py.
 
-
-# programiz.com
+## programiz.com
 
 ### Built-in exceptions
+
 ![exceptions (programiz.com)](https://www.programiz.com/python-programming/exceptions)
 
 Illegal operations can raise exceptions. There are plenty of built-in exceptions in Python that are raised when corresponding errors occur.
@@ -20,6 +17,7 @@ We can view all the built-in exceptions
 ```python
 print(dir(locals()['__builtins__']))
 ```
+
 ```python
 try:
     
@@ -35,6 +33,7 @@ except IndexError:
 ```
 
 ### user-defined exceptions
+
 ![user defined exceptions (programiz.com)](https://www.programiz.com/python-programming/user-defined-exception)
 
 ```python
@@ -56,7 +55,6 @@ try:
 except InvalidAgeException:
     print("Exception occurred: Invalid Age")
 ```
-
 
 ```python
 class SalaryNotInRangeError(Exception):
