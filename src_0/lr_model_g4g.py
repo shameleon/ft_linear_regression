@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from math import sqrt
 
 class LinearRegG4G:
     """copied from https://www.geeksforgeeks.org/ml-linear-regression/"""
@@ -46,7 +47,7 @@ class LinearRegG4G:
             cost = self.cost_function(predictions, train_output)
             #append loss and print
             self.loss.append(cost)
-            # print("Iteration = {}, Loss = {}".format(i+1, cost))
+            print("Iteration = {}, Loss = {}".format(i+1, cost))
  
             # back propagation
             derivatives = self.backward_propagation(train_input, train_output, predictions)
@@ -74,12 +75,14 @@ def main():
     y_output = np.array(data['price'])
     train_output = normalize(y_output)
     linear_reg = LinearRegG4G()
-    parameters, loss = linear_reg.train(train_input, train_output, 0.05, 1000)
+    parameters, loss = linear_reg.train(train_input, train_output, 0.05, 20)
 
     #Prediction on test data
     test_input = np.linspace(min(train_input), max(train_input), 20)
     y_pred = test_input * parameters['m'] + parameters['c']
-    
+
+    #mse = np.square(np.subtract(y_output,y_pred)).mean() 
+    #rmse = math.sqrt(MSE)
     # Plot the regression line with actual data pointa
     """
     plt.plot(train_input, train_output, '+', label='Actual values')
@@ -93,8 +96,8 @@ def main():
     """
     # equation = f'y = {.2f} x +{.2f}'.format(parameters['m'], parameters['c'])
     equation = 'Hello'
-    fig, ax = plt.subplots(ncols=2, nrows=1, sharey=True)
-    fig.set_figwidth(15)
+    fig, ax = plt.subplots(ncols=1, nrows=2, sharey=True)
+    fig.set_figheight(15)
     # ax[0].text(0, 0.5, equation, color="green", fontsize=18, ha='center')
     ax[0].plot(train_input, train_output, '+', label='Actual values')
     ax[0].plot(test_input, y_pred, label='Predicted values')
