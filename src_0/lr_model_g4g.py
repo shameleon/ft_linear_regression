@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
 class LinearRegG4G:
     """copied from https://www.geeksforgeeks.org/ml-linear-regression/"""
     def __init__(self):
@@ -11,6 +10,7 @@ class LinearRegG4G:
     def forward_propagation(self, train_input):
         m = self.parameters['m']
         c = self.parameters['c']
+        # print('\x1b[6;30;33m m = {}   c = {}\x1b[0m\n'.format(m, c))
         predictions = np.multiply(m, train_input) + c
         # predictions = m * train_input + c
         return predictions
@@ -21,11 +21,12 @@ class LinearRegG4G:
  
     def backward_propagation(self, train_input, train_output, predictions):
         derivatives = {}
-        df = (train_output - predictions) * -1
-        dm = np.mean(np.multiply(train_input, df))
-        dc = np.mean(df)
+        df = predictions - train_output
+        dm = 2 * np.mean(np.multiply(train_input, df))
+        dc = 2 * np.mean(df)
         derivatives['dm'] = dm
         derivatives['dc'] = dc
+        # print('dm = {}  dc = {}'.format(dm, dc))
         return derivatives
  
     def update_parameters(self, derivatives, learning_rate):
@@ -38,23 +39,28 @@ class LinearRegG4G:
         self.parameters['c'] = 0
         self.loss = []
         for i in range(iters):
-            #forward propagation
+            # forward propagation
             predictions = self.forward_propagation(train_input)
-            print(predictions)
-            #cost function
+            # print(predictions)
+            # cost function
             cost = self.cost_function(predictions, train_output)
-            print(cost)
             #append loss and print
             self.loss.append(cost)
-            print("Iteration = {}, Loss = {}".format(i+1, cost))
+            # print("Iteration = {}, Loss = {}".format(i+1, cost))
  
-            #back propagation
+            # back propagation
             derivatives = self.backward_propagation(train_input, train_output, predictions)
  
-            #update parameters
+            # update parameters
             self.update_parameters(derivatives, learning_rate)
  
         return self.parameters, self.loss
+
+def normalize(arr):
+    min = np.min(arr)
+    max = np.max(arr)
+    range = max - min
+    return (arr - min) / range
 
 def main():
     # url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
@@ -63,22 +69,38 @@ def main():
     data = data.dropna()
     # train_input = data['km'].to_numpy
     # train_output = data['price'].to_numpy
-    train_input = np.array(data['km'])
-    train_output = np.array(data['price'])
-    print(train_output)
+    x_input = np.array(data['km'])
+    train_input = normalize(x_input)
+    y_output = np.array(data['price'])
+    train_output = normalize(y_output)
     linear_reg = LinearRegG4G()
-    parameters, loss = linear_reg.train(train_input, train_output, 0.0005, 3)
+    parameters, loss = linear_reg.train(train_input, train_output, 0.05, 1000)
 
     #Prediction on test data
-    test_input = np.linspace(min(train_input), max(train_input), 20).astype(int)
+    test_input = np.linspace(min(train_input), max(train_input), 20)
     y_pred = test_input * parameters['m'] + parameters['c']
     
     # Plot the regression line with actual data pointa
+    """
     plt.plot(train_input, train_output, '+', label='Actual values')
     plt.plot(test_input, y_pred, label='Predicted values')
     plt.xlabel('Test input')
     plt.ylabel('Test Output or Predicted output')
     plt.legend()
+    plt.show()
+    plt.plot(loss)
+    plt.show()
+    """
+    # equation = f'y = {.2f} x +{.2f}'.format(parameters['m'], parameters['c'])
+    equation = 'Hello'
+    fig, ax = plt.subplots(ncols=2, nrows=1, sharey=True)
+    fig.set_figwidth(15)
+    # ax[0].text(0, 0.5, equation, color="green", fontsize=18, ha='center')
+    ax[0].plot(train_input, train_output, '+', label='Actual values')
+    ax[0].plot(test_input, y_pred, label='Predicted values')
+    ax[0].legend()
+    ax[1].plot(loss)
+    ax[1].set_title('Loss function')
     plt.show()
 
 
