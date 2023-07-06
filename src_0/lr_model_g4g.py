@@ -37,7 +37,7 @@ class LinearRegG4G:
     def train(self, train_input, train_output, learning_rate, iters=50):
         #initialize random parameters
         self.parameters['m'] = 0
-        self.parameters['c'] = 0pip3
+        self.parameters['c'] = 0
         self.loss = []
         for i in range(iters):
             # forward propagation
@@ -75,7 +75,7 @@ def main():
     y_output = np.array(data['price'])
     train_output = normalize(y_output)
     linear_reg = LinearRegG4G()
-    parameters, loss = linear_reg.train(train_input, train_output, 0.05, 20)
+    parameters, loss = linear_reg.train(train_input, train_output, 0.05, 100)
 
     #Prediction on test data
     test_input = np.linspace(min(train_input), max(train_input), 20)
@@ -96,16 +96,18 @@ def main():
     """
     # equation = f'y = {.2f} x +{.2f}'.format(parameters['m'], parameters['c'])
     equation = 'Hello'
-    fig, ax = plt.subplots(ncols=1, nrows=2, sharey=True)
-    fig.set_figheight(15)
+    fig, ax = plt.subplots(ncols=1, nrows=2, figsize=(16, 10))
     # ax[0].text(0, 0.5, equation, color="green", fontsize=18, ha='center')
     ax[0].plot(train_input, train_output, '+', label='Actual values')
     ax[0].plot(test_input, y_pred, label='Predicted values')
+    ax[0].set_xlabel('normalized input')
+    ax[0].set_ylabel('normalized output')
     ax[0].legend()
     ax[1].plot(loss)
     ax[1].set_title('Loss function')
     plt.show()
-
+    # https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html
+    # https://matplotlib.org/stable/tutorials/text/index.html
 
 if __name__ == "__main__":
     main()
