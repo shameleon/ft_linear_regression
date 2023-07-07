@@ -37,7 +37,7 @@ clean:
 	@echo "Removing virtual environment"
 	rm -rf $(VENV)
 
-.PHONY: run active off test flake list clean
+.PHONY: list flake run clean
 
 #ON:
 #source ./venv/bin/activate

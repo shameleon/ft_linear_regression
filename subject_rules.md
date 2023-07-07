@@ -28,3 +28,12 @@ that you were asked to test.
 
 ![makefile](https://earthly.dev/blog/python-makefile/)
 ![makefile](https://medium.com/aigent/makefiles-for-python-and-beyond-5cf28349bf05)
+
+## python cheatsheet
+
+![python cheatsheet](https://www.utc.fr/~jlaforet/Suppl/python-cheatsheets.pdf)
+
+### Bokeh
+
+![bokeh](https://datascientest.com/bokeh-python-tout-savoir)
+
