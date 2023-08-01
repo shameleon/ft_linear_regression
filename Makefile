@@ -6,7 +6,7 @@
 # make alone will run
 .DEFAULT_GOAL := $(VENV)
 
-SRC		= ./src/
+SRC		= ./src_1/
 
 # virtual environment, pip and python
 VENV		= ./venv/

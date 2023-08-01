@@ -36,12 +36,10 @@ class PredictPrice:
             if (val < 0) * (float(val) > self.max_mileage):
                 raise ValueError
         except (RuntimeError, TypeError, ValueError):
-            print ("Error : Invalid Mileage")
+            print("Error : Invalid Mileage")
         else:
             price = self.predicted_price(val)
-            print('\x1b[1;30;42m'
-                + 'Predicted Price ($):'
-                + '\x1b[0m')
+            print('\x1b[1;30;42m' + 'Predicted Price ($):' + '\x1b[0m')
             print('{:.2f}'.format(price))
         return None
 
@@ -59,6 +57,7 @@ class PredictPrice:
                 based on a trained model.\n\
                 \x1b[6;30;60m    price = {a} + mileage * {b} \x1b[0m'
 
+
 def main() -> None:
     """ """
     my_model = LinearRegressionModel()
@@ -75,6 +74,7 @@ def main() -> None:
             print("Error : TypeError or NameError ")
         except ValueError:
             print("Oops!  That was no valid mileage.")
+
 
 if __name__ == "__main__":
     """training model then predicting"""

@@ -21,7 +21,7 @@ create a new project folder, then run:
 ```properties python<version> -m venv <virtual-environment-name>```
 ```properties python3.8 -m venv env```
 
-```shell
+```
 cd ft_linear_regression
 virtualenv env
 source ./venv/bin/activate

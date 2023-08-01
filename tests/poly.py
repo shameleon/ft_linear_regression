@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from numpy.polynomial import Polynomial
 
-url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
+url = 'https://cdn.intra.42.fr/document/document/18562/data.csv'
 #Importing a CSV file into the DataFrame
 data = pd.read_csv(url, sep=",", usecols= ['km','price'])
 print (data)

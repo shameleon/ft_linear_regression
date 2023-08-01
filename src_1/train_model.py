@@ -7,7 +7,7 @@ class LinearRegressionModel:
     """ """
     def __init__(self):
         """ """
-        self.url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
+        self.url = 'https://cdn.intra.42.fr/document/document/18562/data.csv'
         self.data = pd.read_csv(self.url, sep=",", usecols=['km', 'price'])
         # self.data.sort_values(by=['km'], inplace=True, ascending=True)
         self.x = self.data['km'].to_numpy
