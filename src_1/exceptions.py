@@ -23,7 +23,7 @@ def main():
             raise InvalidMileageRangeException(mileage)
     except (ValueError):
         print("Error : Value Error, not an integer number")
-    else :
+    else:
         price = slope * mileage + intercept
         try:
             assert price >= 0
@@ -32,6 +32,7 @@ def main():
             raise InvalidPriceException()
         finally:
             print("Predicted price :", price)
+
 
 if __name__ == "__main__":
     """testing exceptions"""

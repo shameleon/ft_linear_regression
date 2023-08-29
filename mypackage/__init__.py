@@ -1,2 +1,2 @@
-from .linear_gression_utils import correlation
-from .linear_gression_utils import normalize
+from .ft_linear_regression_utils import correlation
+from .ft_linear_regression_utils import normalize
