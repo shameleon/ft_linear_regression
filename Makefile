@@ -1,12 +1,15 @@
+#############################
 #### virtual environment ####
+#############################
 
 # all recipe lines for each target will be provided to a single invocation of the shell
+# ONESHELL special target appears anywhere in the makefile then all recipe lines for each target will be provided to a single invocation of the shell.
 .ONESHELL:
 
 # make alone will run
 .DEFAULT_GOAL := $(VENV)
 
-SRC		= ./src_1/
+SRC		= ./src_2/
 
 # virtual environment, pip and python
 VENV		= ./venv/
@@ -15,11 +18,14 @@ V_PY		= ./venv/bin/python
 V_FLAKE		= ./venv/bin/flake8 
 
 $(VENV): requirements.txt
-	@echo "Installing Virtual Environment"
-	pip install virtualenv
+	@echo "$(CG) Installing Virtual Environment $(CZ)"
 	virtualenv $(VENV)
+	@echo "$(CG) Virtual Environment pip is installing requirements $(CZ)"
+	$(V_PIP) install -r requirements.txt
+
+on:
+	@echo "$(CG) Activating Virtual Environment $(CZ)"
 	source ./venv/bin/activate
-	$(V_PIP) install --upgrade -r requirements.txt
 
 list:
 	$(V_PY) -m pip list
@@ -31,15 +37,26 @@ run:
 	$(V_PY) $(SRC)main.py
 
 clean:
-	@echo "Removing __pycache__ "
+	@echo "$(CR) Removing __pycache__ "
 	find . -type d -name "__pycache__" | xargs rm -rf {};
+	@echo "$(CR) Removing .pyc files $(CZ)"
 	find -iname "*.pyc" -delete
-	@echo "Removing virtual environment"
-	rm -rf $(VENV)
 
-.PHONY: list flake run clean
+fclean: clean
+	@echo "$(CR) Deactivating virtual environment"
+	deactivate && rm -rf $(VENV)
+	@echo "$(CR) Removed virtual environment $(CZ)"
 
-#ON:
-#source ./venv/bin/activate
-#OFF:
-#deactivate
+re: fclean
+
+.PHONY: list flake run clean fclean re on
+
+# colors
+CR:=\033[1;31m
+CG:=\033[1;32m
+CZ:=\033[0m
+
+# ON:
+# source ./venv/bin/activate
+# OFF:
+# deactivate
