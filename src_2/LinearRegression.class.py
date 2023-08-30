@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-class LinearRegressionModel:
+class LinearRegression:
     """ """
     def __init__(self, learning_rate = 0.05, epochs=1000):
         """ """
@@ -37,26 +37,13 @@ class LinearRegressionModel:
         """https://www.scaler.com/topics/python-str/"""
         return f'\x1b[6;30;60m Training [ok]\n model :\
             y = {self.origin} + x * {self.slope}.\x1b[0m'
-    
-def normalize(arr):
-    min = np.min(arr)
-    max = np.max(arr)
-    range = max - min
-    return (arr - min) / range
-
-def load_dataset(source: str):
-    """ """
-    data = pd.read_csv(source, sep=",", usecols=['km', 'price'])
-    input = data['km'].to_numpy
-    output = data['price'].to_numpy
-    normalized_input = normalize(input)
-    normalized_output = normalize(output)
-    c = 0.936
-    m = -0.995
 
 def main() -> None:
     """ """
     load_dataset(path = './datasets/data.csv')
+    my_model = LinearRegressionModel(0.05, 100)
+    print("Model training")
+    print(my_model)
     return None
 
 if __name__ == "__main__":
