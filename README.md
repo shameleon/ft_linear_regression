@@ -35,8 +35,7 @@ https://www.analyticsvidhya.com/blog/2021/04/gradient-descent-in-linear-regressi
 
 ![Questions to Test Your Skills on Linear Regression Algorithm](https://www.analyticsvidhya.com/blog/2021/06/25-questions-to-test-your-skills-on-linear-regression-algorithm/)
 
-```
- supervised machine learning algorithm that finds the best linear-fit relationship on the given dataset, between independent and dependent variables. It is mostly done with the help of the Sum of Squared Residuals Method, known as the Ordinary least squares (OLS) method.
+``` supervised machine learning algorithm that finds the best linear-fit relationship on the given dataset, between independent and dependent variables. It is mostly done with the help of the Sum of Squared Residuals Method, known as the Ordinary least squares (OLS) method.
 
 Mathematically, the main objective of the gradient descent for linear regression is to find the solution of the following expression,
 Here, h is the linear hypothesis model, defined as h=θ0 + θ1x
