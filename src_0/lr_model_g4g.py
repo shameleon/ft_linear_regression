@@ -63,6 +63,7 @@ def normalize(arr):
     range = max - min
     return (arr - min) / range
 
+
 def main():
     # url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
     learning_rate = 0.05
@@ -96,22 +97,23 @@ def main():
     plt.plot(loss)
     plt.show()
     """
-    # equation = f'y = {.2f} x +{.2f}'.format(parameters['m'], parameters['c'])
-    equation = 'Hello'
+    with np.printoptions(precision=3, suppress=True):
+        equation = 'm = {} c = {}'.format(parameters['m'], parameters['c'])
+        print (equation)
     fig, ax = plt.subplots(ncols=4, nrows=1, figsize=(24, 8))
     i = 0
-    ax[0].text(0, 0.5, equation, color="green", fontsize=18, ha='center')
-    ax[0].plot(x_input, y_output, 'o', color="green", label='price')
-    ax[0].set_xlabel('mileage (km)')
-    ax[0].set_ylabel('price ($)')
-    ax[0].legend()
+    ax[i].plot(x_input, y_output, 'o', color="green", label='price')
+    ax[i].set_xlabel('mileage (km)')
+    ax[i].set_ylabel('price ($)')
+    ax[i].legend()
     i += 1
     ax[i].plot(train_input, train_output, '+', label='Actual values')
     ax[i].plot(test_input, y_pred, label='Predicted values')
     ax[i].set_xlabel('normalized input')
     ax[i].set_ylabel('normalized output')
     ax[i].legend()
-    ax[i].grid(True)
+    ax[i].grid(alpha = 0.5)
+    ax[i].text(0.9, 0.15, equation, color="orange", fontsize = 12, ha = 'right', va = 'bottom', alpha = 0.7)
     i +=1
     ax[i].plot(loss)
     ax[i].set_title('Loss function')

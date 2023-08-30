@@ -5,16 +5,20 @@ import matplotlib.pyplot as plt
 
 class LinearRegressionModel:
     """ """
-    def __init__(self):
+    def __init__(self, learning_rate, epochs):
         """ """
-        self.url = 'https://cdn.intra.42.fr/document/document/18562/data.csv'
-        self.data = pd.read_csv(self.url, sep=",", usecols=['km', 'price'])
-        # self.data.sort_values(by=['km'], inplace=True, ascending=True)
-        self.x = self.data['km'].to_numpy
-        self.y = self.data['price'].to_numpy
-        self.arr = self.data[['km', 'price']].to_numpy()
-        self.origin = 9000.0    # set to zero
-        self.slope = -0.025     # set to zero
+        url = 'https://cdn.intra.42.fr/document/document/18562/data.csv'
+        # path = './data/data.csv'
+        data = pd.read_csv(url, sep=",", usecols=['km', 'price'])
+        # print(data.size())
+        data = data.dropna()
+        self.input = data['km'].to_numpy
+        self.output = data['price'].to_numpy
+        # self.arr = self.data[['km', 'price']].to_numpy()
+        self.origin = 0    # set to zero
+        self.slope = 0     # set to zero
+        self.learning_rate = learning_rate
+        self.epochs = epochs
         return None
 
     def plot_data(self):
@@ -33,14 +37,15 @@ class LinearRegressionModel:
     def __str__(self):
         """https://www.scaler.com/topics/python-str/"""
         return f'\x1b[6;30;60m Training [ok]\n model :\
-            {self.origin} + m * {self.slope}.\x1b[0m'
+            y = {self.origin} + x * {self.slope}.\x1b[0m'
 
-def main() -> int:
+
+def main() -> None:
     """ """
-    my_model = LinearRegressionModel()
+    my_model = LinearRegressionModel(0.05, 100)
     print("Model training")
     print(my_model)
-    return 0
+    return None
 
 if __name__ == "__main__":
     """training model"""
