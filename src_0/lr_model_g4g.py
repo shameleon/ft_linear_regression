@@ -65,7 +65,9 @@ def normalize(arr):
 
 def main():
     # url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
-    path = './data.csv'
+    learning_rate = 0.05
+    epochs = 1000
+    path = './data/data.csv'
     data = pd.read_csv(path, sep=",", usecols=['km', 'price'])
     data = data.dropna()
     # train_input = data['km'].to_numpy
@@ -75,7 +77,7 @@ def main():
     y_output = np.array(data['price'])
     train_output = normalize(y_output)
     linear_reg = LinearRegG4G()
-    parameters, loss = linear_reg.train(train_input, train_output, 0.05, 100)
+    parameters, loss = linear_reg.train(train_input, train_output, learning_rate, epochs)
 
     #Prediction on test data
     test_input = np.linspace(min(train_input), max(train_input), 20)
@@ -96,15 +98,28 @@ def main():
     """
     # equation = f'y = {.2f} x +{.2f}'.format(parameters['m'], parameters['c'])
     equation = 'Hello'
-    fig, ax = plt.subplots(ncols=1, nrows=2, figsize=(16, 10))
-    # ax[0].text(0, 0.5, equation, color="green", fontsize=18, ha='center')
-    ax[0].plot(train_input, train_output, '+', label='Actual values')
-    ax[0].plot(test_input, y_pred, label='Predicted values')
-    ax[0].set_xlabel('normalized input')
-    ax[0].set_ylabel('normalized output')
+    fig, ax = plt.subplots(ncols=4, nrows=1, figsize=(24, 8))
+    i = 0
+    ax[0].text(0, 0.5, equation, color="green", fontsize=18, ha='center')
+    ax[0].plot(x_input, y_output, 'o', color="green", label='price')
+    ax[0].set_xlabel('mileage (km)')
+    ax[0].set_ylabel('price ($)')
     ax[0].legend()
-    ax[1].plot(loss)
-    ax[1].set_title('Loss function')
+    i += 1
+    ax[i].plot(train_input, train_output, '+', label='Actual values')
+    ax[i].plot(test_input, y_pred, label='Predicted values')
+    ax[i].set_xlabel('normalized input')
+    ax[i].set_ylabel('normalized output')
+    ax[i].legend()
+    ax[i].grid(True)
+    i +=1
+    ax[i].plot(loss)
+    ax[i].set_title('Loss function')
+    ax[i].set_xlabel('epochs')
+    ax[i].set_ylabel('normalized output')
+    i += 1
+    y_residual = np.subtract(train_output, train_input * parameters['m'] + parameters['c'])
+    ax[i].plot(train_input, abs(y_residual), 'x', color="red", label='residual')
     plt.show()
     # https://matplotlib.org/stable/tutorials/intermediate/legend_guide.html
     # https://matplotlib.org/stable/tutorials/text/index.html

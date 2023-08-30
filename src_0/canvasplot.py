@@ -13,7 +13,7 @@ def subplots(df1, df2):
     plt.show()
 
 def main():
-    """importing csv then calling plots"""
+    """importing csv then subplots"""
     url = 'https://cdn.intra.42.fr/document/document/18562/data.csv'
     df1 = pd.read_csv(url, sep=",", usecols=['km', 'price'])
     print('Imported data.csv')

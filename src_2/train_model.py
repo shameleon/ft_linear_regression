@@ -35,6 +35,16 @@ class LinearRegressionModel:
         return f'\x1b[6;30;60m Training [ok]\n model :\
             {self.origin} + m * {self.slope}.\x1b[0m'
 
+def main() -> int:
+    """ """
+    my_model = LinearRegressionModel()
+    print("Model training")
+    print(my_model)
+    return 0
+
+if __name__ == "__main__":
+    """training model"""
+    main()
 
 """
 https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/
