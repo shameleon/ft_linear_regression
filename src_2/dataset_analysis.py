@@ -75,6 +75,9 @@ class LinearRegressionModel:
         """https://www.scaler.com/topics/python-str/"""
         return f'\x1b[6;30;60m Training [ok]\n model :\
             y = {self.origin} + x * {self.slope}.\x1b[0m'
+    
+# regularization param
+# https://github.com/Frixoe/xor-neural-network/blob/master/XOR-Net-Notebook.ipynb?ref=hackernoon.com
 
 def correlation_coefficient(x: np.ndarray, y:np.ndarray) -> float:
     """ Pearson Product-Moment Correlation Coefficient.
