@@ -5,7 +5,7 @@ import time
 
 class LinearRegressionModel:
     """ """
-    def __init__(self, train_input, train_output, learning_rate = 0.05, epochs = 1000):
+    def __init__(self, train_input, train_output, learning_rate = 0.1, epochs = 500):
         """ """
         self.train_input = train_input
         self.train_output = train_output
@@ -59,7 +59,7 @@ class LinearRegressionModel:
             else:
                 print("Iteration = {}, Loss = {}".format(i + 1, self.cost), end = '\r')
             self.backward_propagation()
-        self.save_parameters()
+        #self.save_parameters()
 
     def get_norm_coeffs(self):
         coeffs = {"origin": self.origin, "slope": self.slope}
@@ -115,7 +115,7 @@ def load_dataset(file: str):
 
 def main() -> None:
     """ """
-    df = load_dataset(file = './datasets/data.csv')
+    df = load_dataset(file = 'datasets/data.csv')
     x_input = np.array(df['km'])
     y_output = np.array(df['price'])
     correlation_coefficient(x_input, y_output)
@@ -125,6 +125,7 @@ def main() -> None:
         print("------------- Training dataset -------------")
         linear_model = LinearRegressionModel(x_input, y_output)
         linear_model.train_model()
+        print(linear_model)
     return None
 
 if __name__ == "__main__":

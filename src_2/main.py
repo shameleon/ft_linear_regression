@@ -13,7 +13,7 @@ def normalize_array(arr):
     return ((arr - min(arr))) / (max(arr) - min(arr))
 
 def denormalize_array(norm_array, arr):
-    return (norm_array * (max(arr) - min(arr))) + min(arr))
+    return (norm_array * (max(arr) - min(arr))) + min(arr)
 
 def raw_estimated_price(t0, x, t1):
     return t0 + x * t1
