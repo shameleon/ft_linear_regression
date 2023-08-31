@@ -5,7 +5,7 @@ import time
 
 class LinearRegressionModel:
     """ """
-    def __init__(self, train_input, train_output, learning_rate = 0.05, epochs = 50):
+    def __init__(self, train_input, train_output, learning_rate = 0.05, epochs = 1000):
         """ """
         self.train_input = train_input
         self.train_output = train_output
@@ -13,12 +13,11 @@ class LinearRegressionModel:
         self.norm_output = self.normalize(train_output)
         self.origin = 0
         self.slope = 0
-        self.update_predict_output()
         self.learning_rate = learning_rate
         self.epochs = epochs
         return None
     
-    def normalize(arr: np.ndarray) -> np.ndarray:
+    def normalize(self, arr: np.ndarray) -> np.ndarray:
         min = np.min(arr)
         max = np.max(arr)
         range = max - min
@@ -26,11 +25,11 @@ class LinearRegressionModel:
 
     def update_predicted_output(self):
         """ predicted_output = origin + input * slope """
-        self.pred_output = self.origin + np.multiply(self.slope * self.norm_input)
+        self.pred_output = self.origin + np.multiply(self.slope, self.norm_input)
     
     def calculate_cost(self):
         """ predicted_output = origin + input * slope """
-        self.cost =  np.mean((self.train_output - self.pred_output) ** 2)
+        self.cost =  np.mean((self.norm_output - self.pred_output) ** 2)
     
     def forward_propagation(self):
         """ """
@@ -56,6 +55,9 @@ class LinearRegressionModel:
                 print("Iteration = {}, Loss = {}".format(i + 1, self.cost), end = '\r')
                 time.sleep(0.01)
             self.backward_propagation()
+            # self.save_parameters()
+
+#     def get_loss_function(self):
 
 #     def get_coeffs(self):
 #         coeffs = {"origin": self.origin, "slope": self.slope}
@@ -113,7 +115,7 @@ def main() -> None:
     answer = input("Would you like to train a linear regression model (y / n) ? ")
     if (answer in ["y", "Y"]):
         print("------------- Training dataset -------------")
-        linear_model = LinearRegressionModel(x_input, y_output, learning_rate = 0.05, epochs = 50)
+        linear_model = LinearRegressionModel(x_input, y_output)
         linear_model.train_model()
     return None
 
