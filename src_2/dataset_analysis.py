@@ -18,6 +18,7 @@ class LinearRegressionModel:
         return None
     
     def normalize(self, arr: np.ndarray) -> np.ndarray:
+        """ Normalization rescales the values into a range of [0,1]. Also called min-max scaled"""
         min = np.min(arr)
         max = np.max(arr)
         range = max - min
@@ -36,6 +37,8 @@ class LinearRegressionModel:
         self.update_predicted_output()
         self.calculate_cost()
         self.loss.append(self.cost)
+        self.origins.append(self.origin)
+        self.slopes.append(self.slope)
 
     def backward_propagation(self):
         """ """
@@ -47,26 +50,31 @@ class LinearRegressionModel:
 
     def train_model(self):
         self.loss = []
+        self.origins = []
+        self.slopes = []
         for i in range(self.epochs):
             self.forward_propagation()
             if (i == 0 or i == self.epochs - 1):
                 print("Iteration = {}, Loss = {}".format(i + 1, self.cost))
             else:
                 print("Iteration = {}, Loss = {}".format(i + 1, self.cost), end = '\r')
-                time.sleep(0.01)
             self.backward_propagation()
-            # self.save_parameters()
+        self.save_parameters()
 
-#     def get_loss_function(self):
+    def get_norm_coeffs(self):
+        coeffs = {"origin": self.origin, "slope": self.slope}
+        return coeffs
+    
+    def get_model_coeffs(self):
+        x = self.train_input
+        y = self.train_output
+        self.theta0 = self.origin * (max(y) - min(y)) + min(y)
+        self.theta1 = self.slope 
 
-#     def get_coeffs(self):
-#         coeffs = {"origin": self.origin, "slope": self.slope}
-#         return coeffs
-
-#     def __str__(self):
-#         """https://www.scaler.com/topics/python-str/"""
-#         return f'\x1b[6;30;60m Training [ok]\n model :\
-#             y = {self.origin} + x * {self.slope}.\x1b[0m'
+    def __str__(self):
+        """https://www.scaler.com/topics/python-str/"""
+        return f'\x1b[6;30;60m Training [ok]\n model :\
+            y = {self.origin} + x * {self.slope}.\x1b[0m'
 
 def correlation_coefficient(x: np.ndarray, y:np.ndarray) -> float:
     """ Pearson Product-Moment Correlation Coefficient.

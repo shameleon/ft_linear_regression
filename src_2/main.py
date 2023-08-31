@@ -84,3 +84,15 @@ if __name__ == "__main__":
     main()
 
 # https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/
+
+
+x0, x1 = self.training_set[0][0], self.training_set[1][0]
+x0n, x1n = self.normalized_training_set[0][0], self.normalized_training_set[1][0]
+y0n, y1n = self.hypothesis(x0n), self.hypothesis(x1n)
+p_diff = self.max_price - self.min_price
+
+theta0 = (x1 / (x1 - x0)) * (y0n * p_diff + self.min_price - (x0 / x1 * (y1n * p_diff + self.min_price)))
+y0 = self.training_set[0][1]
+
+theta1 = (y0 - theta0) / x0
+print(theta0, theta1) //RESULT: 8481.172796984529 -0.020129886654102203
