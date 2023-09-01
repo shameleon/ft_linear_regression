@@ -33,7 +33,8 @@ class LinearRegressionModel:
         self.cost =  np.mean((self.norm_output - self.pred_output) ** 2)
     
     def forward_propagation(self):
-        """ """
+        """ Calculate the model predictions: update_predicted_output
+        np dot(X, theta) """
         self.update_predicted_output()
         self.calculate_cost()
         self.loss.append(self.cost)
