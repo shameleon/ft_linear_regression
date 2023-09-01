@@ -5,7 +5,7 @@ import time
 
 class LinearRegressionModel:
     """ """
-    def __init__(self, train_input, train_output, learning_rate = 0.1, epochs = 500):
+    def __init__(self, train_input, train_output, learning_rate = 0.05, epochs = 500):
         """ """
         self.train_input = train_input
         self.train_output = train_output
@@ -108,7 +108,7 @@ def load_dataset(file: str):
     returns two numpy arrays """
     url = 'https://cdn.intra.42.fr/document/document/18562/data.csv'
     try:
-        df = pd.read_csv(file, sep=",", usecols=['km', 'price'])
+        df = pd.read_csv(f'{file}')
         print('dataframe :', df.size())
     except:
         print("File not found. Dataset was loaded from 42 intra.")
@@ -119,7 +119,7 @@ def load_dataset(file: str):
 
 def main() -> None:
     """ """
-    df = load_dataset(file = 'datasets/data.csv')
+    df = load_dataset(file = 'data.csv')
     x_input = np.array(df['km'])
     y_output = np.array(df['price'])
     correlation_coefficient(x_input, y_output)
