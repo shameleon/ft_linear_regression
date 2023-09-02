@@ -33,7 +33,7 @@ class LinearRegression:
     def predict_output(self):
         return self.theta[0] + self.x * self.theta[1]
 
-    def train_gradient_descent(self, learning_rate = 0.05, epochs = 500):
+    def train_gradient_descent(self, learning_rate = 0.5, epochs = 50):
         """ Initialize the model parameters
             Training loop :
                 Calculate the model predictions
@@ -51,7 +51,7 @@ class LinearRegression:
             partial_derivative[0] = 2 * np.mean(dy)
             partial_derivative[1] = 2 * np.mean(np.multiply(self.x, dy)) 
             self.theta -= self.alpha * partial_derivative
-        np.savetxt("./gradient_descent_model/theta.csv", self.theta, delimiter=",")
+        #np.savetxt("./gradient_descent_model/theta.csv", self.theta, delimiter=",")
 
     """
     def denormalize_theta(self, y: np.ndarray) -> np.ndarray:
@@ -68,9 +68,9 @@ class LinearRegression:
     
     def __str__(self):
         """ """
-        return f'\x1b[6;30;60m Training linear regression model using a gradient descent algorithm :\
-            Model to Normalized dataset \
-            y = {self.theta[0]} + x * {self.theta[1]}.\x1b[0m'
+        return f'\x1b[6;33;46mTraining linear regression model using a gradient descent algorithm\
+            \x1b[1;33;47m\nModel to Normalized dataset : \n \
+            y = {self.theta[0]} + x * {self.theta[1]}\x1b[0m'
 
 def mean_absolute_error(y, y_pred):
     absolute_error = abs(y - y_pred)
@@ -78,9 +78,27 @@ def mean_absolute_error(y, y_pred):
     return mae
 
 def mean_absolute_percentage_error(y, y_pred):
+    """ It cannot be used if there are zero or close-to-zero values """
     mean_absolute_error = abs((y - y_pred) / y) / len(y)
     mape =  np.sum(mean_absolute_error) * 100 
     return mape
+
+def residual_of_sum_square(y, y_pred):
+    residual = y - y_pred
+    rss = np.sum(residual ** 2)
+    return rss
+
+def mean_squared_error(y, y_pred):
+    residual = y - y_pred
+    rss = np.sum(residual ** 2)
+    mse = rss / len(y)
+    return mse
+
+def root_mean_squared_error(y, y_pred):
+    residual = y - y_pred
+    rss = np.sum(residual ** 2)
+    rmse = np.sqrt(rss / len(y))
+    return rmse
 
 def normalize(arr: np.ndarray) -> np.ndarray:
     """ Normalization rescales the values into a range of [0,1]. Also called min-max scaled """
@@ -91,8 +109,17 @@ def denormalize_array(normarr: np.ndarray, y) -> np.ndarray:
     span = np.max(y) - np.min(y)
     return (normarr * span) + np.min(y)
 
+def denormalize_element(element, y):
+    span = np.max(y) - np.min(y)
+    return (element * span) + np.min(y)
+
 def predict_output(x , theta):
     return theta[0] + x * theta[1]
+
+def get_theta_from_csv(theta):
+        """ """
+        return f'\033[1;32;47mModel to dataset : \n \
+            y = {theta[0]} + x * {theta[1]}\033[0m'
 
 def main():
     df = pd.read_csv(f'data.csv')
@@ -105,13 +132,23 @@ def main():
     normalized_model = LinearRegression(x_train, y_train)
     normalized_model.train_gradient_descent()
     print(normalized_model)
+    norm_theta = normalized_model.get_theta()
     # theta = model.denormalize_theta(y_output)
     y_pred_norm = normalized_model.predict_output()
     # y_pred_norm = predict_output(x_train, model.get_theta())
     y_pred = denormalize_array(y_pred_norm, y_output)
+    theta = np.zeros(2)
+    theta[0] = denormalize_element(norm_theta[0], y_output)
+    theta[1] = (y_pred[-1] - y_pred[0]) / (x_input[-1] - x_input[0])
+    np.savetxt("./gradient_descent_model/theta.csv", theta, delimiter=",")
+    print(get_theta_from_csv(theta))
+    # model accuracy
     mae = mean_absolute_error(y_output, y_pred)
     mape = mean_absolute_percentage_error(y_output, y_pred)
-    print('MAE = {:.3f} \t MAPE = {:.3f}%'.format(mae, mape))
+    print('MAE = {:.3f} \n MAPE = {:.3f}%'.format(mae, mape))
+    mse = mean_squared_error(y_output, y_pred)
+    rmse = root_mean_squared_error(y_output, y_pred)
+    print('MSE = {:.3f} \n RMSE = {:.3f}%'.format(mse, rmse))
 
     """
     Suppose your regression is y = W*x + b with x the scaled data, with the original data it is
@@ -123,3 +160,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    """https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal"""
