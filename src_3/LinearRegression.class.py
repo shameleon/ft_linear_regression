@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-class LinearRegression:
+class LinearRegressionGradientDescent:
     """ no normalization """
     def __init__(self, x_train, y_train):
         """ """
@@ -129,7 +129,7 @@ def main():
     y_output = arr[:,1]
     x_train = normalize(arr[:,0])
     y_train = normalize(arr[:,1])
-    normalized_model = LinearRegression(x_train, y_train)
+    normalized_model = LinearRegressionGradientDescent(x_train, y_train)
     normalized_model.train_gradient_descent()
     print(normalized_model)
     norm_theta = normalized_model.get_theta()

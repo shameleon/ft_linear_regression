@@ -57,6 +57,9 @@ def main():
     #ax.set_zlim(-1.01, 1.01)
     fig.colorbar(surf, ax = ax, shrink=0.3, aspect=20)
     plt.show()
+    # rotating a 3D plot
+    # https://matplotlib.org/stable/gallery/mplot3d/rotate_axes3d_sgskip.html
+
 
 if __name__ == "__main__":
     main()
