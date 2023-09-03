@@ -1,30 +1,26 @@
 import numpy as np
-
-# : color code
-RED = '\033[91m'
-GRE = '\033[92m'
-YEL = '\033[93m'
-BLU = '\033[94m'
-MAG = '\033[95m'
-CYA = '\033[96m'
-COL_RESET = '\x1b[0m'
-COL_GRNBLK = '\x1b[1;32;40m'
-COL_BLUWHI = '\x1b[1;34;47m'
-COL_BLURED = '\x1b[2;34;41m'
-COL_REDWHI = '\x1b[2;31;47m'
-COL_ERR = '\x1b[2;34;41m'
-
+from my_colors import *
 
 class PredictPriceFromModel():
-    """ [θ0, θ1] """
+    """ class for predicting price for a given mileage 
+        based on linear regression parameters, theta = [θ0, θ1]
+        self.__init__        : takes file name as parameter 
+        self.__upload_model  : loads parameters from file
+        self.ask_for_mileage : user enters a mileage
+                             : will raise exceptions
+        self.__predict_price : calculates the price based on theta
+        self.__str__         : returns prediction result as a string
+        
+        Nested classes for Exceptions : out range mileages and prices
+    """
     def __init__(self, file):
         self.model = file
         self.theta = np.zeros(2)
-        self.upload_model()
+        self.__upload_model()
         self.mileage = 0
-        self.price = self.predict_price(self.mileage)
+        self.price = self.__predict_price(self.mileage)
 
-    def upload_model(self):
+    def __upload_model(self):
         try:
             self.theta = np.loadtxt(self.model)
             print("✅", f'{COL_BLUWHI}Linear regression model parameters loaded{COL_RESET}')
@@ -34,12 +30,12 @@ class PredictPriceFromModel():
         print('\tθ0 = {:.4f}     θ1 = {:.4f}'.format(self.theta[0], self.theta[1]))
         print(f'{COL_RESET}')
 
-    def predict_price(self, mileage):
+    def __predict_price(self, mileage):
         """ 
         hypothesis : price = θ0 + θ1 * mileage 
-        dot product :
+        price is calculated with dot product :
         price = [θ0, θ1].[    1    ]
-                        [ mileage ]
+                         [ mileage ]
         """
         vec = np.ones(2)
         vec[1] = mileage
@@ -55,7 +51,7 @@ class PredictPriceFromModel():
             self.mileage = float(in_str)
             if self.mileage < 0 or self.mileage > 1E6:
                 raise InvalidMileageRangeError(self.mileage)
-            self.price = self.predict_price(self.mileage) 
+            self.price = self.__predict_price(self.mileage) 
             if self.price < 0:
                 raise NegativePredictedPriceError()
         except (RecursionError, RuntimeError, TypeError, ValueError):
@@ -89,35 +85,18 @@ class NegativePredictedPriceError(Exception):
         super().__init__(self.message)
 
 
-def intro():
-    print(f'\n{COL_BLUWHI}----------- PREDICT A CAR PRICE -----------{COL_RESET}\n\n')
+def test_intro():
+    print(f'\n{COL_BLUWHI}----------- TEST : PredictPriceFromModel class -----------{COL_RESET}\n')
 
 def test_predict_class(model:PredictPriceFromModel):
     mileages = [0, 25000, 100000, 200000, 35236, 89465.8, -5000, 4597866]
     for mileage in mileages:
         pred_price = model.predict_price(mileage)
-        print('mileage = {} km    predicted price = {:.2f} $'.format(mileage, pred_price))
-
-
-def main():
-    intro()
-    model_prediction = PredictPriceFromModel("./gradient_descent_model/theta.csv")
-    # test_predict_class(model_prediction)
-    continue_loop = True
-    while(continue_loop):
-        model_prediction.ask_for_mileage()
-        # print(model_prediction)
-        try:
-            in_str = input('\r\x1b[2;37;40m\nContinue ? press [enter]\n [no] or [q] to quit\n \x1b[0m\r')
-        except (EOFError):
-            print("Error : EOF is not a option, lol")
-        else:
-            if (in_str in ["N", "No", "n", "no", "q", "Q", "exit", "quit", "QUIT"]):
-                continue_loop = False
-
-
+        print('mileage = {} km \tpredicted price = $ {:.2f}'.format(mileage, pred_price))
+ 
 if __name__ == "__main__":
-    main()
-
-    """
-    add line result to file """
+    test_intro()
+    print(PredictPriceFromModel.__doc__)
+    price_model = PredictPriceFromModel("./gradient_descent_model/theta.csv")
+    # to test mileage remove private status of class method __predict_price 
+    # test_predict_class(price_model)
