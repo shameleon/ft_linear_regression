@@ -85,18 +85,12 @@ class NegativePredictedPriceError(Exception):
         super().__init__(self.message)
 
 
-def test_intro():
-    print(f'\n{COL_BLUWHI}----------- TEST : PredictPriceFromModel class -----------{COL_RESET}\n')
-
-def test_predict_class(model:PredictPriceFromModel):
-    mileages = [0, 25000, 100000, 200000, 35236, 89465.8, -5000, 4597866]
-    for mileage in mileages:
-        pred_price = model.predict_price(mileage)
-        print('mileage = {} km \tpredicted price = $ {:.2f}'.format(mileage, pred_price))
- 
 if __name__ == "__main__":
-    test_intro()
+    print(f'\n{COL_BLUWHI}----------- TEST MODE : PredictPriceFromModel class -----------{COL_RESET}\n')
     print(PredictPriceFromModel.__doc__)
+    print(f'\n{COL_BLUCYA}----------- TEST1 : no model -----------{COL_RESET}\n')
+    price_no_model = PredictPriceFromModel("./gradient_descent_model/whatever.csv")
+    price_no_model.ask_for_mileage()
+    print(f'\n{COL_BLUCYA}----------- TEST2 : valid model -----------{COL_RESET}\n')
     price_model = PredictPriceFromModel("./gradient_descent_model/theta.csv")
-    # to test mileage remove private status of class method __predict_price 
-    # test_predict_class(price_model)
+    price_model.ask_for_mileage()

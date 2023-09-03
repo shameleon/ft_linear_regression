@@ -1,5 +1,5 @@
 import numpy as np
-from PredictPriceModule import PredictPriceFromModel
+from PredictPriceClass import PredictPriceFromModel
 from my_colors import *
 
 def intro():
