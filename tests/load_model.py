@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def upload_model_theta() -> np.ndarray:
     try:
         theta = np.loadtxt("./gradient_descent_model/theta.csv")

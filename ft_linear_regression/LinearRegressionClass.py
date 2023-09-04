@@ -1,7 +1,5 @@
 import numpy as np
-import pandas as pd
 from my_colors import *
-import statistics_utils as stat
 
 class LinearRegressionGradientDescent:
     """ class LinearRegressionGradientDescent
@@ -22,7 +20,7 @@ class LinearRegressionGradientDescent:
         self.get_theta
             return theta parameters
     """
-    def __init__(self, x_train:np.ndarray, y_train:np.ndarray):
+    def __init__(self, x_train:np.ndarray, y_train:np.ndarray) -> None:
         """ """
         self.x = x_train
         self.y = y_train

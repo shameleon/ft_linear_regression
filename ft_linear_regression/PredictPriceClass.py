@@ -13,7 +13,7 @@ class PredictPriceFromModel():
         
         Nested classes for Exceptions : out range mileages and prices
     """
-    def __init__(self, file):
+    def __init__(self, file) -> None:
         """"""
         self.model_file = file
         self.theta = np.zeros(2)
