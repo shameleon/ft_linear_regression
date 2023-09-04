@@ -1,6 +1,6 @@
 import numpy as np
-from PredictPriceClass import PredictPriceFromModel
 from my_colors import *
+from PredictPriceClass import PredictPriceFromModel
 
 def intro():
     print(f'\n{COL_BLUWHI}----------- PREDICT A CAR PRICE -----------{COL_RESET}\n\n')
@@ -14,9 +14,9 @@ def main():
         model_prediction.ask_for_mileage()
         # print(model_prediction)
         try:
-            in_str = input('\r\x1b[2;37;40m\nContinue ? press [enter]\n [no] or [q] to quit\n \x1b[0m\r')
+            in_str = input('\x1b[2;37;40m\npress [enter] to continue, [no] or [q] to quit\x1b[0m')
         except (EOFError):
-            print("Error : EOF is not a option, lol")
+            print("\nError : unexpected end of file")
         else:
             if (in_str in ["N", "No", "n", "no", "q", "Q", "exit", "quit", "QUIT"]):
                 continue_loop = False
