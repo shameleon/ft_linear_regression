@@ -68,6 +68,11 @@ def root_mean_squared_error(y, y_pred):
     rmse = np.sqrt(rss / len(y))
     return rmse
 
+def mean_error(y, y_pred):
+    error = y - y_pred
+    me = np.sum(error) / len(y)
+    return me
+
 def normalize(arr: np.ndarray) -> np.ndarray:
     """ Normalization rescales the values into a range of [0,1]. Also called min-max scaled """
     span = np.max(arr) - np.min(arr)
@@ -88,3 +93,5 @@ def model_accuracy(y_output:np.ndarray, y_pred:np.ndarray, theta):
     mse = mean_squared_error(y_output, y_pred)
     rmse = root_mean_squared_error(y_output, y_pred)
     print('MSE = {:.3f} \t RMSE = {:.3f}%'.format(mse, rmse))
+    me = mean_error(y_output, y_pred)
+    print('\x1b[38:5:208mmean error ME = {:.3f}\x1b[0m'.format(me))

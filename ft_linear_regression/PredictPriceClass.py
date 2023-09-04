@@ -29,7 +29,7 @@ class PredictPriceFromModel():
         except:
             print_cross('Linear regression model parameters not found : initialized to default')
         print(f'{COL_GRNBLK}\thypothesis :\n\tprice = θ0 + θ1 * mileage')
-        print('\tθ0 = {:.4f}     θ1 = {:.4f}'.format(self.theta[0], self.theta[1]))
+        print('\tθ0 = {:.2f}     θ1 = {:6f}'.format(self.theta[0], self.theta[1]))
         print(f'{COL_RESET}')
 
     def __predict_price(self, mileage):
@@ -47,9 +47,7 @@ class PredictPriceFromModel():
     def ask_for_mileage(self):
         """ """
         try:
-            in_str = input('\x1b[4;34;44m'
-                    + 'Please, enter a car mileage (in km):'
-                    + '\x1b[0m')
+            in_str = input_user_str('Please, enter a car mileage (in km) :')
             self.mileage = float(in_str)
             if self.mileage < 0 or self.mileage > 1E6:
                 raise InvalidMileageRangeError(self.mileage)
@@ -71,7 +69,8 @@ class PredictPriceFromModel():
         return None
 
     def __str__(self):
-        return f'mileage = {format(self.mileage, ".0f")} km    predicted price = $ {format(self.price, ".2f")}'
+        return f'mileage = {format(self.mileage, ".0f")} km \
+                    predicted price = $ {format(self.price, ".2f")}\n'
     
 class InvalidMileageRangeError(Exception):
     """ Exception raised for errors in the input Mileage"""
@@ -89,12 +88,12 @@ class NegativePredictedPriceError(Exception):
 
 def test_predict_price_class(theta_file:str):
     """ tests for PredictPriceFromModel class """
-    print(f'\n{COL_BLUWHI}----------- TEST MODE : PredictPriceFromModel class -----------{COL_RESET}\n')
+    print_title2('TEST MODE : PredictPriceFromModel class')
     print(PredictPriceFromModel.__doc__)
-    print(f'\n{COL_BLUCYA}----------- TEST1 : no model -----------{COL_RESET}\n')
+    print_title3('TEST1 : no model')
     price_no_model = PredictPriceFromModel("./gradient_descent_model/whatever.csv")
     price_no_model.ask_for_mileage()
-    print(f'\n{COL_BLUCYA}----------- TEST2 : valid model -----------{COL_RESET}\n')
+    print_title3('TEST2 : valid model')
     price_model = PredictPriceFromModel("./gradient_descent_model/theta.csv")
     price_model.ask_for_mileage()
 

@@ -2,28 +2,22 @@ import numpy as np
 from color_out import *
 from PredictPriceClass import PredictPriceFromModel
 
-def intro():
+def main() -> None:
+    """ Predicting car price program.
+    Asks for a car mileage in km and predicts the car's price.
+    Price is calculated by PredictPriceFromModel class instance
+    and is based on linear regression parameters
+    that are eventually found in the source file.
+    """
+    source_file = "./gradient_descent_model/theta.csv"
     print_title('PREDICT A CAR PRICE')
-
-def main():
-    intro()
-    model_prediction = PredictPriceFromModel("./gradient_descent_model/theta.csv")
-    # test_predict_class(model_prediction)
-    continue_loop = True
-    while(continue_loop):
+    model_prediction = PredictPriceFromModel(source_file)
+    while True:
         model_prediction.ask_for_mileage()
-        # print(model_prediction)
-        try:
-            in_str = input('\x1b[2;37;40m\npress [enter] to continue, [no] or [q] to quit\x1b[0m')
-        except (EOFError):
-            print("\nError : unexpected end of file")
-        else:
-            if (in_str in ["N", "No", "n", "no", "q", "Q", "exit", "quit", "QUIT"]):
-                continue_loop = False
-
+        if not input_user_yes('Continue, for another price prediction'):
+            break
+    print_comment("END :)")
+    return None
 
 if __name__ == "__main__":
     main()
-
-    """
-    add line result to file """

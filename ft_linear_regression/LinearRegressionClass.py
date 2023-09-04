@@ -1,5 +1,7 @@
 import numpy as np
 from color_out import *
+import plot_utils as plut
+from time import sleep
 
 class LinearRegressionGradientDescent:
     """ class LinearRegressionGradientDescent
@@ -24,6 +26,7 @@ class LinearRegressionGradientDescent:
         """ """
         self.x = x_train
         self.y = y_train
+        print_title('Training linear regression model using a gradient descent algorithm')
         return None
     
     def save_current_state(self, iter):
@@ -37,9 +40,11 @@ class LinearRegressionGradientDescent:
             print("Iteration = {}, Loss = {}".format(iter + 1, self.cost))
         else:
             print("Iteration = {}, Loss = {}".format(iter + 1, self.cost), end = '\r')
+            # sleep(0.01)
 
     def init_training(self, learning_rate, epochs):
         """ theta = [biais , weight] """
+        print_status(f'alpha = {learning_rate}     epochs = {epochs}')
         self.alpha = learning_rate
         self.epochs = epochs
         self.theta = np.zeros(2)
@@ -50,7 +55,7 @@ class LinearRegressionGradientDescent:
     def predict_output(self):
         return self.theta[0] + self.x * self.theta[1]
 
-    def train_gradient_descent(self, learning_rate = 0.5, epochs = 50):
+    def train_gradient_descent(self, learning_rate = 0.05, epochs = 1000):
         """ Initialize the model parameters
             Training loop :
                 Calculate the model predictions
@@ -70,25 +75,33 @@ class LinearRegressionGradientDescent:
             self.theta -= self.alpha * partial_derivative
         #np.savetxt("./gradient_descent_model/theta.csv", self.theta, delimiter=",")
 
+    def plot_all(self):
+        y_pred = self.theta[0] + self.x * self.theta[1]
+        plut.plot_gradient_descent(self.x, self.y, y_pred, \
+                                    self.loss, self.biases, self.weights)
+        
     def get_theta(self) -> np.ndarray:
         return self.theta
     
     def __str__(self):
         """ """
-        return f'\x1b[6;33;46mTraining linear regression model using a gradient descent algorithm\
-            \x1b[1;33;47m\nModel to dataset : \n \
-            y = {self.theta[0]} + x * {self.theta[1]}\x1b[0m'
+        with np.printoptions(precision=3, suppress=True):
+            equation = 'y = {} + {}.x'.format(self.theta[0], self.theta[1])
+        return f'\x1b[2;32;40m{equation}\x1b[0m'
+        # return f'\x1b[2;32;40my = {self.theta[0]} + x * {self.theta[1]}\x1b[0m'
 
 def test_gradient_descent_class():
     """ """
-    print(f'\n{COL_BLUWHI}----------- TEST MODE : LinearRegressionGradientDescent class -----------{COL_RESET}\n')
+    print_title(f'TEST MODE : LinearRegressionGradientDescent class')
     print(LinearRegressionGradientDescent.__doc__)
     x_train = np.array([0.1, 0.3, 0.4, 0.8, 1])
     y_train = np.array([ 4, 2.5, 1.5, -1, -1.5  ])
-    print(f'\n{COL_BLUCYA}----------- TEST : small dataset -----------{COL_RESET}\n')
+    print_title2('TEST : small dataset')
     test_model = LinearRegressionGradientDescent(x_train, y_train)
-    test_model.train_gradient_descent(0.05, 100)
+    test_model.train_gradient_descent(0.1, 500)
     print(test_model)
+    if input_user_yes("Plot loss function over iterations"):
+        test_model.plot_all()
 
 if __name__ == "__main__":
     test_gradient_descent_class()

@@ -36,3 +36,32 @@ def plot_cost_function(x_train:np.ndarray, y_train:np.ndarray):
     ax.set_zlabel('cost function J(θ0, θ1) (log scaled)')
     fig.colorbar(surf, ax = ax, shrink=0.3, aspect=20)
     plt.show()
+
+def plot_gradient_descent(x_train:np.ndarray, y_train:np.ndarray, y_pred:np.ndarray, \
+                            loss:np.ndarray, biases:np.ndarray, weights:np.ndarray):
+    fig, ax = plt.subplots(ncols=4, nrows=1, figsize=(24, 6))
+    i = 0
+    ax[i].plot(x_train, y_train, '+', label='Actual values')
+    ax[i].plot(x_train, y_pred, label='Predicted values')
+    ax[i].set_title('dataset')
+    ax[i].set_xlabel('normalized input')
+    ax[i].set_ylabel('normalized output')
+    ax[i].legend()
+    ax[i].grid(alpha = 0.5)
+    #ax[i].text(0.9, 0.15, equation, color="orange", fontsize = 12, ha = 'right', va = 'bottom', alpha = 0.7)
+    i +=1
+    ax[i].plot(loss)
+    ax[i].set_title('Loss')
+    ax[i].set_xlabel('epochs')
+    ax[i].set_ylabel('cost function J(θ0, θ1)')
+    i +=1
+    ax[i].plot(biases)
+    ax[i].set_title('Bias')
+    ax[i].set_xlabel('epochs')
+    ax[i].set_ylabel('θ0')
+    i +=1
+    ax[i].plot(weights)
+    ax[i].set_title('Weight')
+    ax[i].set_xlabel('epochs')
+    ax[i].set_ylabel('θ1')
+    plt.show()

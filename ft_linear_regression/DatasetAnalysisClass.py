@@ -23,7 +23,6 @@ class CarPriceDatasetAnalysis:
         self.__load_dataset()
         self.normalize = normalize
         self.__normalize_dataset()
-        #print("✅",f'{COL_BLUWHI}dataset ready for training{COL_RESET}')
         print_check('dataset ready for training')
         return None
     
@@ -64,7 +63,7 @@ class CarPriceDatasetAnalysis:
             return None
         self.gradient_model = LinearRegressionGradientDescent(self.x_train, self.y_train)
         self.gradient_model.train_gradient_descent()
-        print("normalized dataset :\n",self.gradient_model)
+        print("Normalized dataset : ",self.gradient_model)
         norm_theta = self.gradient_model.get_theta()
         y_pred_norm = self.gradient_model.predict_output()
         self.y_pred = stat.denormalize_array(y_pred_norm, self.y_output)
@@ -77,14 +76,16 @@ class CarPriceDatasetAnalysis:
         self.theta = theta
         if input_user_yes("Model accuracy statistics") == True:
             stat.model_accuracy(self.y_output, self.y_pred, self.theta)
+        if input_user_yes("Plot loss function over iterations"):
+            print_title3("Normalize dataset, subplots for gradient descent algorithm")
+            self.gradient_model.plot_all()
 
 
 def test_dataset_analysis_class() -> None:
     """ """
     test_model = CarPriceDatasetAnalysis()
-    answer = input("Preview analysis for dataset (y / n) ? ")
-    if (answer in ["y", "Y"]):
-        print("------------- dataset preview -------------")
+    if input_user_yes('Preview analysis for dataset'):
+        print_title3('dataset preview')
         test_model.dataset_preview()
     test_model.train_dataset()
     return None
