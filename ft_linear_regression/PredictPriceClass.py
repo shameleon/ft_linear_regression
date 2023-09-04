@@ -1,5 +1,5 @@
 import numpy as np
-from my_colors import *
+from color_out import *
 
 class PredictPriceFromModel():
     """ class for predicting price for a given mileage 
@@ -25,9 +25,9 @@ class PredictPriceFromModel():
     def __upload_model(self):
         try:
             self.theta = np.loadtxt(self.model_file)
-            print("✅", f'{COL_BLUWHI}Linear regression model parameters loaded{COL_RESET}')
+            print_check('Linear regression model parameters loaded')
         except:
-            print("❌", f'{COL_REDWHI}Linear regression model parameters not found : initialized to default{COL_RESET}')
+            print_cross('Linear regression model parameters not found : initialized to default')
         print(f'{COL_GRNBLK}\thypothesis :\n\tprice = θ0 + θ1 * mileage')
         print('\tθ0 = {:.4f}     θ1 = {:.4f}'.format(self.theta[0], self.theta[1]))
         print(f'{COL_RESET}')
@@ -57,15 +57,15 @@ class PredictPriceFromModel():
             if self.price < 0:
                 raise NegativePredictedPriceError()
         except (RecursionError, RuntimeError, TypeError, ValueError):
-            print("Error : input is not valid")
+            print_stderr("Error : input is not valid")
         except (EOFError):
-            print("Error : unexpected end of file")
+            print_stderr("Error : unexpected end of file")
         except (NegativePredictedPriceError):
             self.price = 0
             print("Mileage too High: predicted price is zero")
             print(self)
         except (InvalidMileageRangeError):
-            print("Error: mileage is out of range")
+            print_stderr("Error: mileage is out of range")
         else:
             print(self)
         return None

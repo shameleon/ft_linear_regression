@@ -1,5 +1,5 @@
 import numpy as np
-from my_colors import *
+from color_out import *
 
 class LinearRegressionGradientDescent:
     """ class LinearRegressionGradientDescent

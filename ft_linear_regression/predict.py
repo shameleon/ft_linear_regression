@@ -1,9 +1,9 @@
 import numpy as np
-from my_colors import *
+from color_out import *
 from PredictPriceClass import PredictPriceFromModel
 
 def intro():
-    print(f'\n{COL_BLUWHI}----------- PREDICT A CAR PRICE -----------{COL_RESET}\n\n')
+    print_title('PREDICT A CAR PRICE')
 
 def main():
     intro()
