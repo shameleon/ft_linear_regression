@@ -62,7 +62,7 @@ class PredictPriceFromModel():
             print_stderr("Error : unexpected end of file")
         except (NegativePredictedPriceError):
             self.price = 0
-            print("Mileage too High: predicted price is zero")
+            print("Mileage too High: predicted price is set to zero")
             print(self)
         except (InvalidMileageRangeError):
             print_stderr("Error: mileage is out of range")

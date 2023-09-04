@@ -51,14 +51,11 @@ class CarPriceDatasetAnalysis:
     
     def dataset_preview(self):
         stat.correlation_coefficient(self.x_input, self.y_output)
-        answer = input("Plot the dataset (y / n) ? ")
-        if (answer in ["y", "Y"]):
+        if input_user_yes("Plot the dataset"):
             plut.plot_dataset(self.df)
-        answer = input("Statistical linear_regression model analysis for dataset (y / n) ? ")
-        if (answer in ["y", "Y"]):
+        if input_user_yes("Statistical linear_regression model analysis for dataset"):
             statistic_model = stat.StatisticLinearRegression(self.x_input, self.y_output)
-        answer = input("Plot the cost function (y / n) ? ")
-        if (answer in ["y", "Y"]):
+        if input_user_yes("Plot the cost function"):
             plut.plot_cost_function(self.x_train, self.y_train)
 
     def train_dataset(self) -> None:
@@ -67,7 +64,7 @@ class CarPriceDatasetAnalysis:
             return None
         self.gradient_model = LinearRegressionGradientDescent(self.x_train, self.y_train)
         self.gradient_model.train_gradient_descent()
-        print(self.gradient_model)
+        print("normalized dataset :\n",self.gradient_model)
         norm_theta = self.gradient_model.get_theta()
         y_pred_norm = self.gradient_model.predict_output()
         self.y_pred = stat.denormalize_array(y_pred_norm, self.y_output)
@@ -78,18 +75,9 @@ class CarPriceDatasetAnalysis:
         print_result(f'Model equation to dataset : \n \
             y = {theta[0]} + x * {theta[1]}'.format(theta[0], theta[1]))
         self.theta = theta
+        if input_user_yes("Model accuracy statistics") == True:
+            stat.model_accuracy(self.y_output, self.y_pred, self.theta)
 
-    def model_accuracy(self):
-        if not input_user_yes("Model accuracy statistics"):
-            return None
-        y_output = self.y_output
-        y_pred = self.y_pred
-        mae = stat.mean_absolute_error(y_output, y_pred)
-        mape = stat.mean_absolute_percentage_error(y_output, y_pred)
-        print('MAE = {:.3f} \n MAPE = {:.3f}%'.format(mae, mape))
-        mse = stat.mean_squared_error(y_output, y_pred)
-        rmse = stat.root_mean_squared_error(y_output, y_pred)
-        print('MSE = {:.3f} \n RMSE = {:.3f}%'.format(mse, rmse))
 
 def test_dataset_analysis_class() -> None:
     """ """

@@ -15,7 +15,11 @@ COL_ERR = '\x1b[2;34;41m'
 def print_title(mssg:str):
     print(f'{COL_BLUWHI}----------- ' + mssg 
           + f' -----------{COL_RESET}\n')
-    
+
+def print_title2(mssg:str):
+    print(f'{COL_BLUWHI}----------- ' + mssg 
+          + f' -----------{COL_RESET}\n')
+
 def print_check(mssg:str):
     print("✅",f'{COL_BLUWHI}' + mssg + f'{COL_RESET}')
 
@@ -35,18 +39,14 @@ def print_status(mssg:str):
 def print_comment(mssg:str):
     pass
 
-def print_result(mssg:str):
-    # print(f'{COL_GRNWHI}' + mssg + f'{COL_RESET}')
-    print(f'{COL_ORANGE}' + mssg + f'{COL_RESET}')
-
 def input_user(mssg:str) -> str:
     answer = input(f'{COL_GRNWHI}' + mssg + f'{COL_RESET}')
     return answer
 
-def input_user_yes(mssg:str, pos_answers = ["y", "Y"], neg_answers = ["n", "N"] ) -> bool:
+def input_user_yes(mssg:str, pos_answers = ["y", "yes"] ) -> bool:
     try:
         answer = input(f'{COL_GRNWHI}' + mssg + f'(y / n) ? {COL_RESET}')
     except (EOFError):
         print_stderr("\nError : unexpected end of file !")
         return False
-    return answer in pos_answers
+    return answer.lower() in pos_answers

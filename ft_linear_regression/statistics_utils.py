@@ -80,3 +80,11 @@ def denormalize_array(normed_arr: np.ndarray, y) -> np.ndarray:
 def denormalize_element(norm_element, y):
     span = np.max(y) - np.min(y)
     return (norm_element * span) + np.min(y)
+
+def model_accuracy(y_output:np.ndarray, y_pred:np.ndarray, theta):
+    mae = mean_absolute_error(y_output, y_pred)
+    mape = mean_absolute_percentage_error(y_output, y_pred)
+    print('MAE = {:.3f} \t MAPE = {:.3f}%'.format(mae, mape))
+    mse = mean_squared_error(y_output, y_pred)
+    rmse = root_mean_squared_error(y_output, y_pred)
+    print('MSE = {:.3f} \t RMSE = {:.3f}%'.format(mse, rmse))
