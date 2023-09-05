@@ -60,13 +60,10 @@ class CarPriceDatasetAnalysis:
             plut.plot_cost_function(self.x_train, self.y_train)
     
     def estimated_output_error(self):
-        """ y_denorm - y_estimated = 491.15 """
+        """  """
         y_denorm = stat.denormalize_array(self.gradient_model.predict_output(), self.y_output)
         y_estimated = self.theta[0] + self.x_input * self.theta[1]
         print(y_denorm - y_estimated)
-        y_norm = stat.normalize(self.y_output)
-        y_denorm = stat.denormalize_array(y_norm, self.y_output)
-        print(y_denorm - self.y_output)
 
 
     def __denormalize_and_save_theta(self):
@@ -75,15 +72,9 @@ class CarPriceDatasetAnalysis:
             norm_theta = self.gradient_model.get_theta()
             y_pred_norm = self.gradient_model.predict_output()
             self.y_pred = stat.denormalize_array(y_pred_norm, self.y_output)
-            theta = np.zeros(2)
-            # x = 0 
-            x_n = stat.denormalize_element(0, self.x_input)
-            # y_n =  θ0' + θ1' * x_n
-            # OK theta[0] = stat.denormalize_element(norm_theta[0], self.y_output) + 491.13414357
-            y_norm_at_0 = norm_theta[0] + norm_theta[1] * stat.denormalize_element(0, self.x_input)
-            print(y_norm_at_0, "  ", x_n)
-            theta[0] = stat.denormalize_element(y_norm_at_0, self.y_output)
+            theta = np.ones(2)
             theta[1] = (self.y_pred[-1] - self.y_pred[0]) / (self.x_input[-1] - self.x_input[0])
+            theta[0] = self.y_pred[0] - self.x_input[0] * theta[1]
         else:
             print("Dataset : ",self.gradient_model)
             theta = self.gradient_model.get_theta()
