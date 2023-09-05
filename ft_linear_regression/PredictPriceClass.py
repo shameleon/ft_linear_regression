@@ -1,5 +1,7 @@
 import numpy as np
-from color_out import *
+from printout_utils import print_check, print_cross, print_stderr, \
+        print_title2, print_title3, input_user_str
+
 
 class PredictPriceFromModel():
     """ class for predicting price for a given mileage 
@@ -23,6 +25,7 @@ class PredictPriceFromModel():
         self.__upload_model()
         self.mileage = 0
         self.price = self.__predict_price(self.mileage)
+        self.color = ['\x1b[0m', '\x1b[1;32;40m']
         return None
 
     def __upload_model(self):
@@ -31,9 +34,9 @@ class PredictPriceFromModel():
             print_check('Linear regression model parameters loaded')
         except:
             print_cross('Linear regression model parameters not found : initialized to default')
-        print(f'{COL_GRNBLK}\thypothesis :\n\tprice = θ0 + θ1 * mileage')
+        print(f'{self.color[1]}\thypothesis :\n\tprice = θ0 + θ1 * mileage')
         print('\tθ0 = {:.2f}     θ1 = {:6f}'.format(self.theta[0], self.theta[1]))
-        print(f'{COL_RESET}')
+        print(f'{self.color[0]}')
 
     def __predict_price(self, mileage:float) -> float:
         """ 
@@ -75,14 +78,14 @@ class PredictPriceFromModel():
                     predicted price = $ {format(self.price, ".2f")}\n'
     
 class InvalidMileageRangeError(Exception):
-    """ Exception raised for errors in the input Mileage"""
+    """ Exception raised for errors in the input Mileage """
     def __init__(self, mileage, message="Invalid mileage : out of range"):
         self.mileage = mileage
         self.message = message
         super().__init__(self.message)
 
 class NegativePredictedPriceError(Exception):
-    """ Exception raised for errors in the input Mileage"""
+    """ Exception raised for errors in the input Mileage """
 
     def __init__(self, message="Invalid price : out of range"):
         self.message = message

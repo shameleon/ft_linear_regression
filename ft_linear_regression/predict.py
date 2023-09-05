@@ -1,5 +1,5 @@
 import numpy as np
-from color_out import *
+from printout_utils import print_title, print_comment, input_user_yes
 from PredictPriceClass import PredictPriceFromModel
 
 def main() -> None:

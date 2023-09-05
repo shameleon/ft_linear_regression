@@ -1,7 +1,7 @@
 import numpy as np
-from color_out import *
 import plot_utils as plut
 from statistics_utils import mean_error, model_accuracy
+from printout_utils import print_title, print_title2, print_status, input_user_yes
 from time import sleep
 
 class LinearRegressionGradientDescent:

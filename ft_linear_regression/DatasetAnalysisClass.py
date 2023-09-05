@@ -4,7 +4,7 @@ import os
 from LinearRegressionClass import LinearRegressionGradientDescent
 import plot_utils as plut
 import statistics_utils as stat
-from color_out import *
+import printout_utils  as pout
 
 class CarPriceDatasetAnalysis:
     """
@@ -25,22 +25,22 @@ class CarPriceDatasetAnalysis:
         self.__load_dataset()
         self.normalize = normalize
         self.__normalize_dataset()
-        print_check('Dataset ready for training')
+        pout.print_check('Dataset ready for training')
         return None
     
     def __load_dataset(self):
         try:
             self.df = pd.read_csv(self.source_file)
         except:
-            print_stderr('Error: could not open file. No data, no model to train.')
-            print_comment("END :(")
+            pout.print_stderr('Error: could not open file. No data, no model to train.')
+            pout.print_comment("END :(")
             exit(0)
         self.df = self.df.dropna()
         arr = self.df.to_numpy()
         self.x_input = arr[:,0]
         self.y_output = arr[:,1]
         if len(self.x_input) < 2 or len(self.y_output) < 2:
-            print_stderr('Error: datapoints missing, no model to train.')
+            pout.print_stderr('Error: datapoints missing, no model to train.')
             exit(0)
 
     def __normalize_dataset(self):
@@ -53,11 +53,11 @@ class CarPriceDatasetAnalysis:
     
     def dataset_preview(self):
         stat.correlation_coefficient(self.x_input, self.y_output)
-        if input_user_yes("Plot the dataset"):
+        if pout.input_user_yes("Plot the dataset"):
             plut.plot_dataset(self.df)
-        if input_user_yes("Statistical linear_regression model analysis for dataset"):
+        if pout.input_user_yes("Statistical linear_regression model analysis for dataset"):
             statistic_model = stat.StatisticLinearRegression(self.x_input, self.y_output)
-        if input_user_yes("Plot the cost function"):
+        if pout.input_user_yes("Plot the cost function"):
             plut.plot_cost_function(self.x_train, self.y_train)
 
     def __denormalize_and_save_theta(self):
@@ -75,7 +75,7 @@ class CarPriceDatasetAnalysis:
         if not os.path.exists(self.dest_path):
             os.makedirs(self.dest_path)
         np.savetxt(f'{self.dest_path + self.dest_file}', theta, delimiter=",")
-        print_result(f'Linear regression model equation to dataset : \n \
+        pout.print_result(f'Linear regression model equation to dataset : \n \
             estimated_price = {theta[0]} + ({theta[1]}) * mileage'.format(theta[0], theta[1]))
         self.theta = theta
 
@@ -88,16 +88,16 @@ class CarPriceDatasetAnalysis:
         """
         self.learning_rate = learning_rate
         self.epochs = epochs
-        if input_user_yes('Preview analysis for dataset'):
-            print_title3('Dataset preview')
+        if pout.input_user_yes('Preview analysis for dataset'):
+            pout.print_title3('Dataset preview')
             self.dataset_preview()
-        if not input_user_yes("Linear regression training with gradient descent algorithm"):
+        if not pout.input_user_yes("Linear regression training with gradient descent algorithm"):
             # end training prog
             return None
         self.gradient_model = LinearRegressionGradientDescent(self.x_train, self.y_train)
         self.gradient_model.train_gradient_descent(learning_rate, epochs)
         self.__denormalize_and_save_theta()
-        print_check("Model trained")
+        pout.print_check("Model trained")
         self.__post_training_analysis()
         return None
     
@@ -106,17 +106,17 @@ class CarPriceDatasetAnalysis:
             ask to plot loss and parameters to epochs during the run of gradient descent algorithm
             ask to draw the final plot : dataset with the regression line
         """
-        if input_user_yes("Model accuracy statistics") == True:
+        if pout.input_user_yes("Model accuracy statistics") == True:
             stat.model_accuracy(self.y_output, self.y_pred, self.theta)
-        if input_user_yes("Plot loss function and parameters over iteration epochs"):
-            print_title2("Trained " + self.normalize * "normalized " + "dataset")
-            print_check("Subplots for gradient descent algorithm")
+        if pout.input_user_yes("Plot loss function and parameters over iteration epochs"):
+            pout.print_title2("Trained " + self.normalize * "normalized " + "dataset")
+            pout.print_check("Subplots for gradient descent algorithm")
             self.gradient_model.plot_all_epochs()
-        if input_user_yes("Draw Final Plot : model regression line to trained dataset"):
-            print_title2("Trained dataset")
-            print_check("Final plot for linear regression with gradient descent algorithm")
+        if pout.input_user_yes("Draw Final Plot : model regression line to trained dataset"):
+            pout.print_title2("Trained dataset")
+            pout.print_check("Final plot for linear regression with gradient descent algorithm")
             self.plot_final()
-        print_comment("END :)")
+        pout.print_comment("END :)")
 
     def plot_final(self):
         y_pred = self.theta[0] + self.x_input * self.theta[1]

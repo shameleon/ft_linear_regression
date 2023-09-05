@@ -1,6 +1,6 @@
-# color code
 import sys
 
+# color code
 """ https://talyian.github.io/ansicolors/ """
 COL_RESET = '\x1b[0m'
 COL_ORANGE = '\x1b[38:5:208m'
