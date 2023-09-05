@@ -4,6 +4,9 @@ from color_out import *
 class PredictPriceFromModel():
     """ class for predicting price for a given mileage 
         based on linear regression parameters, theta = [θ0, θ1]
+
+        hypothesis : price = θ0 + θ1 * mileage 
+
         self.__init__        : takes file name as parameter 
         self.__upload_model  : loads parameters from file
         self.ask_for_mileage : user enters a mileage
@@ -14,7 +17,7 @@ class PredictPriceFromModel():
         Nested classes for Exceptions : out range mileages and prices
     """
     def __init__(self, file) -> None:
-        """"""
+        """parameter : file that contains parameters, created by training.py """
         self.model_file = file
         self.theta = np.zeros(2)
         self.__upload_model()
@@ -34,8 +37,7 @@ class PredictPriceFromModel():
 
     def __predict_price(self, mileage:float) -> float:
         """ 
-        hypothesis : price = θ0 + θ1 * mileage 
-        price is calculated with dot product :
+        Estimated price is calculated with dot product :
         estimated price = [θ0, θ1].[    1    ]
                                    [ mileage ]
         """

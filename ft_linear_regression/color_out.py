@@ -9,7 +9,7 @@ COL_FTLIN = '\x1b[48:5:208m'
 COL_GRNBLK = '\x1b[1;32;40m'
 COL_GRNWHI = '\x1b[2;32;47m'
 COL_BLUWHI = '\x1b[2;34;47m'
-COL_BLUCYA = '\x1b[1;34;46m'
+COL_BLUCYA = '\x1b[1;34;42m'
 #Bolded
 COL_BLUWHI = '\x1b[1;34;47m'
 COL_BLURED = '\x1b[2;34;41m'
@@ -20,7 +20,7 @@ COL_QUERY2 = '\x1b[2;37;47m'
 COL_ASKKM = '\x1b[2;34;43m'
 
 def print_title(mssg:str):
-    print(f'\n              {COL_FTLIN}ft_linear regression{COL_RESET}')
+    print(f'\n   {COL_FTLIN}ft_linear regression{COL_RESET}')
     print(f'{COL_BLUWHI}-----------  ' + mssg 
           + f'  -----------{COL_RESET}\n')
 

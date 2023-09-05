@@ -59,7 +59,7 @@ class LinearRegressionGradientDescent:
             print("Iteration = {}, Loss = {}".format(iter + 1, self.cost))
         else:
             print("Iteration = {}, Loss = {}".format(iter + 1, self.cost), end = '\r')
-            # sleep(0.01)
+            # sleep(0.05)
 
     def __init_training(self, learning_rate, epochs):
         """ theta = [biais , weight] """
@@ -91,8 +91,8 @@ class LinearRegressionGradientDescent:
             #self.cost =  np.mean((dy) ** 2)
             self.__save_current_state(iter)
             partial_derivative = np.zeros(2)
-            partial_derivative[0] = 2 * np.mean(residual)
-            partial_derivative[1] = 2 * np.mean(np.multiply(self.x, residual)) 
+            partial_derivative[0] = np.mean(residual)
+            partial_derivative[1] = np.mean(np.multiply(self.x, residual)) 
             self.theta -= self.alpha * partial_derivative
         self.y_pred = self.predict_output()
 
