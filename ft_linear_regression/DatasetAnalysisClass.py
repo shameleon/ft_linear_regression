@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import os
 from LinearRegressionClass import LinearRegressionGradientDescent
 import plot_utils as plut
 import statistics_utils as stat
@@ -16,10 +17,11 @@ class CarPriceDatasetAnalysis:
     """
     def __init__(self,
                  source = f'data.csv',
-                 dest = "./gradient_descent_model/theta.csv",
+                 dest = "theta.csv",
                  normalize = True) -> None:
         self.source_file = source
-        self.dest_file = dest 
+        self.dest_file = dest
+        self.dest_path = "./gradient_descent_model/"
         self.__load_dataset()
         self.normalize = normalize
         self.__normalize_dataset()
@@ -56,6 +58,42 @@ class CarPriceDatasetAnalysis:
             statistic_model = stat.StatisticLinearRegression(self.x_input, self.y_output)
         if input_user_yes("Plot the cost function"):
             plut.plot_cost_function(self.x_train, self.y_train)
+    
+    def estimated_output_error(self):
+        """ y_denorm - y_estimated = 491.15 """
+        y_denorm = stat.denormalize_array(self.gradient_model.predict_output(), self.y_output)
+        y_estimated = self.theta[0] + self.x_input * self.theta[1]
+        print(y_denorm - y_estimated)
+        y_norm = stat.normalize(self.y_output)
+        y_denorm = stat.denormalize_array(y_norm, self.y_output)
+        print(y_denorm - self.y_output)
+
+
+    def __denormalize_and_save_theta(self):
+        if self.normalize:
+            print("Normalized dataset : ",self.gradient_model)
+            norm_theta = self.gradient_model.get_theta()
+            y_pred_norm = self.gradient_model.predict_output()
+            self.y_pred = stat.denormalize_array(y_pred_norm, self.y_output)
+            theta = np.zeros(2)
+            # x = 0 
+            x_n = stat.denormalize_element(0, self.x_input)
+            # y_n =  θ0' + θ1' * x_n
+            # OK theta[0] = stat.denormalize_element(norm_theta[0], self.y_output) + 491.13414357
+            y_norm_at_0 = norm_theta[0] + norm_theta[1] * stat.denormalize_element(0, self.x_input)
+            print(y_norm_at_0, "  ", x_n)
+            theta[0] = stat.denormalize_element(y_norm_at_0, self.y_output)
+            theta[1] = (self.y_pred[-1] - self.y_pred[0]) / (self.x_input[-1] - self.x_input[0])
+        else:
+            print("Dataset : ",self.gradient_model)
+            theta = self.gradient_model.get_theta()
+        if not os.path.exists(self.dest_path):
+            os.makedirs(self.dest_path)
+        np.savetxt(f'{self.dest_path + self.dest_file}', theta, delimiter=",")
+        print_result(f'Linear regression model equation to dataset : \n \
+            estimated_price = {theta[0]} + ({theta[1]}) * mileage'.format(theta[0], theta[1]))
+        self.theta = theta
+
 
     def train_dataset(self, learning_rate = 0.05, epochs = 100) -> None:
         """ Instanciate GradientDescent class then train model with training dataset.
@@ -73,20 +111,7 @@ class CarPriceDatasetAnalysis:
             return None
         self.gradient_model = LinearRegressionGradientDescent(self.x_train, self.y_train)
         self.gradient_model.train_gradient_descent(learning_rate, epochs)
-        if self.normalize:
-            print("Normalized dataset : ",self.gradient_model)
-            norm_theta = self.gradient_model.get_theta()
-            y_pred_norm = self.gradient_model.predict_output()
-            self.y_pred = stat.denormalize_array(y_pred_norm, self.y_output)
-            theta = np.zeros(2)
-            theta[0] = stat.denormalize_element(norm_theta[0], self.y_output)
-            theta[1] = (self.y_pred[-1] - self.y_pred[0]) / (self.x_input[-1] - self.x_input[0])
-        else:
-            theta = self.gradient_model.get_theta()
-        np.savetxt(self.dest_file, theta, delimiter=",")
-        print_result(f'Linear regression model equation to dataset : \n \
-            estimated_price = {theta[0]} + ({theta[1]}) * mileage'.format(theta[0], theta[1]))
-        self.theta = theta
+        self.__denormalize_and_save_theta()
         self.__post_training_analysis()
         return None
     
@@ -122,7 +147,8 @@ class CarPriceDatasetAnalysis:
 def test_dataset_analysis_class() -> None:
     """ """
     test_model = CarPriceDatasetAnalysis()
-    test_model.train_dataset(0.2, 5000)
+    test_model.train_dataset(0.2, 500)
+    test_model.estimated_output_error()
     return None
 
 if __name__ == "__main__":

@@ -96,13 +96,17 @@ def normalize(arr: np.ndarray) -> np.ndarray:
     span = np.max(arr) - np.min(arr)
     return (arr - np.min(arr)) / span
 
-def denormalize_array(normed_arr: np.ndarray, y) -> np.ndarray:
-    span = np.max(y) - np.min(y)
-    return (normed_arr * span) + np.min(y)
+def normalize_element(norm_element, arr: np.ndarray):
+    span = np.max(arr) - np.min(arr)
+    return norm_element * span + np.min(arr)
 
-def denormalize_element(norm_element, y: np.ndarray):
-    span = np.max(y) - np.min(y)
-    return (norm_element * span) + np.min(y)
+def denormalize_array(normed_arr: np.ndarray, original_arr:np.ndarray) -> np.ndarray:
+    span = np.max(original_arr) - np.min(original_arr)
+    return normed_arr * span + np.min(original_arr)
+
+def denormalize_element(norm_element, original_arr: np.ndarray):
+    span = np.max(original_arr) - np.min(original_arr)
+    return norm_element * span + np.min(original_arr)
 
 def model_accuracy(y_output:np.ndarray, y_pred:np.ndarray, theta):
     mae = mean_absolute_error(y_output, y_pred)

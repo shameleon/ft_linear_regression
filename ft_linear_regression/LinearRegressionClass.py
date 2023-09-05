@@ -52,14 +52,13 @@ class LinearRegressionGradientDescent:
     def __save_current_state(self, iter):
         """Calculate the model predictions: update_predicted_output
         np dot(X, theta) """
-        self.predicted_y = self.theta[0] + self.x * self.theta[1]
         self.loss.append(self.cost)
         self.biases.append(self.theta[0])
         self.weights.append(self.theta[1])
         if (iter == 0 or iter == self.epochs - 1):
-            print("Iteration = {}, \tLoss = {}".format(iter + 1, self.cost))
+            print("Iteration = {}, Loss = {}".format(iter + 1, self.cost))
         else:
-            print("Iteration = {}, \tLoss = {}".format(iter + 1, self.cost), end = '\r')
+            print("Iteration = {}, Loss = {}".format(iter + 1, self.cost), end = '\r')
             # sleep(0.01)
 
     def __init_training(self, learning_rate, epochs):
@@ -85,7 +84,7 @@ class LinearRegressionGradientDescent:
         """
         self.__init_training(learning_rate, epochs)
         for iter in range(epochs):
-            predicted_y = self.theta[0] + self.x * self.theta[1]
+            predicted_y = self.predict_output()
             residual = predicted_y - self.y
             loss_elem = (residual) ** 2
             self.cost = np.sum(loss_elem) / ( 2 * len(residual))
@@ -95,10 +94,10 @@ class LinearRegressionGradientDescent:
             partial_derivative[0] = 2 * np.mean(residual)
             partial_derivative[1] = 2 * np.mean(np.multiply(self.x, residual)) 
             self.theta -= self.alpha * partial_derivative
+        self.y_pred = self.predict_output()
 
     def plot_all_epochs(self):
-        y_pred = self.theta[0] + self.x * self.theta[1]
-        plut.plot_gradient_descent(self.x, self.y, y_pred, \
+        plut.plot_gradient_descent(self.x, self.y, self.y_pred, \
                                     self.loss, self.biases, self.weights)
 
     def get_learning_params(self) -> str:
@@ -107,14 +106,9 @@ class LinearRegressionGradientDescent:
     def get_theta(self) -> np.ndarray:
         return self.theta
     
-    def get_mean_error(self) -> float:
-        y_pred = self.theta[0] + self.x * self.theta[1]
-        me = mean_error(self.y, y_pred)
-        return me
-    
     def get_model_accuracy(self):
         y_pred = self.theta[0] + self.x * self.theta[1]
-        model_accuracy(self.y, y_pred, self.theta)
+        model_accuracy(self.y, self.y_pred, self.theta)
     
     def __str__(self):
         """ """
@@ -134,7 +128,6 @@ def test_gradient_descent_class():
     for learning_rate in [0.01, 0.05, 0.1, 0.5]:
         test_model.train_gradient_descent(learning_rate, 100)
         print(test_model)
-        # print_result(f'Mean Error = {test_model.get_mean_error()}')
         test_model.get_model_accuracy()
         if input_user_yes("Plot loss function over iterations"):
             test_model.plot_all_epochs()
