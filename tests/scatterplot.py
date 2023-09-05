@@ -20,8 +20,7 @@ def sns_join_plot(df):
 
 def main():
     """importing csv then calling plots"""
-    url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
-    df = pd.read_csv(url, sep=",", usecols=['km', 'price'])
+    df = pd.read_csv('data.csv', sep=",", usecols=['km', 'price'])
     print('Imported data.csv')
     sns_join_plot(df)
     sns_resid_plot(df)

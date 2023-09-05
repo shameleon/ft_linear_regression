@@ -16,10 +16,12 @@ Two programs :
 
 ```mermaid
   graph TD;
-      A[import data.csv]--pandas-->B[validate];
-      B -- Yes --> C;
-      B-->D[end];
-      C-->D;
+      A[predict.py]---->B[PredictPrice class];
+      C[model parameters file]---->A[predict.py];
+      A[training.py]---->C[model parameters file];
+      A[training.py]---->D[CarPriceDatasetAnalysis class];
+      D[DatasetAnalysis class]---->E[LinearRegressionGradientDescent class];
+      
 ```
 
 ### Bonus part

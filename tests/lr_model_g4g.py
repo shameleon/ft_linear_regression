@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from math import sqrt
+import time
 
 class LinearRegG4G:
     """copied from https://www.geeksforgeeks.org/ml-linear-regression/"""
@@ -47,14 +48,18 @@ class LinearRegG4G:
             cost = self.cost_function(predictions, train_output)
             #append loss and print
             self.loss.append(cost)
-            print("Iteration = {}, Loss = {}".format(i+1, cost))
+            if i == 0:
+                print("Iteration = {}, Loss = {}".format(i+1, cost))
+            else:
+                print("Iteration = {}, Loss = {}".format(i+1, cost), end = '\r')
+            time.sleep(0.01)
  
             # back propagation
             derivatives = self.backward_propagation(train_input, train_output, predictions)
  
             # update parameters
             self.update_parameters(derivatives, learning_rate)
- 
+        print("Iteration = {}, Loss = {}".format(i+1, cost))
         return self.parameters, self.loss
 
 def normalize(arr):
@@ -68,7 +73,7 @@ def main():
     # url = 'https://cdn.intra.42.fr/document/document/11434/data.csv'
     learning_rate = 0.05
     epochs = 1000
-    path = './data/data.csv'
+    path = './datasets/data.csv'
     data = pd.read_csv(path, sep=",", usecols=['km', 'price'])
     data = data.dropna()
     # train_input = data['km'].to_numpy
