@@ -20,7 +20,7 @@ COL_QUERY2 = '\x1b[2;37;47m'
 COL_ASKKM = '\x1b[2;34;43m'
 
 def print_title(mssg:str):
-    print(f'\n{COL_FTLIN}              ft_linear regression{COL_RESET}')
+    print(f'\n              {COL_FTLIN}ft_linear regression{COL_RESET}')
     print(f'{COL_BLUWHI}-----------  ' + mssg 
           + f'  -----------{COL_RESET}\n')
 

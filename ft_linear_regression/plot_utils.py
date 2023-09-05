@@ -39,13 +39,22 @@ def plot_cost_function(x_train:np.ndarray, y_train:np.ndarray):
 
 def plot_gradient_descent(x_train:np.ndarray, y_train:np.ndarray, y_pred:np.ndarray, \
                             loss:np.ndarray, biases:np.ndarray, weights:np.ndarray):
+    """ plot 1. trained dataset scatter plot, 
+        with an additional line to the predicted model output
+        plot 2. cost function J[θ0, θ1] over epochs
+        plots 3 and 4. resp. biais and weight over epochs
+
+        Parameters : 
+            x_train and y_train are the trained dataset, they might be normalized
+            Thus, the model parameters would be related to normalized data. 
+    """
     fig, ax = plt.subplots(ncols=4, nrows=1, figsize=(24, 6))
     i = 0
     ax[i].plot(x_train, y_train, '+', label='Actual values')
     ax[i].plot(x_train, y_pred, label='Predicted values')
-    ax[i].set_title('dataset')
-    ax[i].set_xlabel('normalized input')
-    ax[i].set_ylabel('normalized output')
+    ax[i].set_title('Trained dataset')
+    ax[i].set_xlabel('input')
+    ax[i].set_ylabel('output')
     ax[i].legend()
     ax[i].grid(alpha = 0.5)
     #ax[i].text(0.9, 0.15, equation, color="orange", fontsize = 12, ha = 'right', va = 'bottom', alpha = 0.7)
@@ -64,4 +73,25 @@ def plot_gradient_descent(x_train:np.ndarray, y_train:np.ndarray, y_pred:np.ndar
     ax[i].set_title('Weight')
     ax[i].set_xlabel('epochs')
     ax[i].set_ylabel('θ1')
+    plt.show()
+
+def plot_final(x_train:np.ndarray, y_train:np.ndarray, y_pred:np.ndarray, \
+               suptitle:str, title:str):
+    """ plot 1. trained dataset scatter plot, 
+        with an additional line to the predicted model output
+        plot 2. cost function J[θ0, θ1] over epochs
+        plots 3 and 4. resp. biais and weight over epochs
+    """
+    fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(8, 20))
+    fig.suptitle(suptitle)
+    ax[0].plot(x_train, y_train, '+', label='Actual trained values')
+    ax[0].plot(x_train, y_pred, label='Predicted values')
+    ax[0].set_title(title, fontsize = 10)
+    ax[0].set_xlabel('mileage (km)')
+    ax[0].set_ylabel('price ($)')
+    ax[0].grid(alpha = 0.5)
+    residual = y_train - y_pred
+    ax[1].stem(x_train, residual)
+    ax[1].set_xlabel('mileage (km)')
+    ax[1].set_ylabel('residual')
     plt.show()

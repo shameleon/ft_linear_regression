@@ -32,12 +32,12 @@ class PredictPriceFromModel():
         print('\tθ0 = {:.2f}     θ1 = {:6f}'.format(self.theta[0], self.theta[1]))
         print(f'{COL_RESET}')
 
-    def __predict_price(self, mileage):
+    def __predict_price(self, mileage:float) -> float:
         """ 
         hypothesis : price = θ0 + θ1 * mileage 
         price is calculated with dot product :
-        price = [θ0, θ1].[    1    ]
-                         [ mileage ]
+        estimated price = [θ0, θ1].[    1    ]
+                                   [ mileage ]
         """
         vec = np.ones(2)
         vec[1] = mileage
