@@ -3,7 +3,7 @@ import printout_utils as pout
 
 
 class PredictPriceFromModel():
-    """ class for predicting price for a given mileage 
+    """ class for predicting price for a given mileage
         based on linear regression parameters, theta = [θ0, θ1]
 
         hypothesis : price = θ0 + θ1 * mileage 

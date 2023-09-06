@@ -9,7 +9,7 @@
 # make alone will run
 .DEFAULT_GOAL := $(VENV)
 
-SRC		:= ./src_2/
+SRC		:= ./ft_linear_regression/
 
 # virtual environment, pip and python
 VENV		:= ./venv/

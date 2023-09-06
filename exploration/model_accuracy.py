@@ -1,22 +1,6 @@
 import numpy as np
 import pandas as pd
 
-
-def r2score(y:np.ndarray, y_pred:np.ndarray) -> float:
-    """
-    Description:
-    Calculate the R2score between the predicted output and the output.
-    Args:
-        y: has to be a numpy.array, a vector of dimension m * 1.
-        y_pred: has to be a numpy.array, a vector of dimension m * 1.
-    Returns:
-        r2score: has to be a float.
-    """
-    mse = mean_squared_error(y, y_pred)
-    var = np.sum((y - np.mean(y)) ** 2) 
-    r2score = 1 - mse / var
-    return r2score 
-
 def mean_absolute_error(y:np.ndarray, y_pred:np.ndarray) -> float:
     """ MAE """
     absolute_error = abs( y_pred - y)
@@ -54,6 +38,35 @@ def mean_error(y:np.ndarray, y_pred:np.ndarray) -> float:
     me = np.sum(error) / len(y)
     return me
 
+def r2score(y:np.ndarray, y_pred:np.ndarray) -> float:
+    """
+    Description:
+    Calculate the R2score between the predicted output and the output.
+    Args:
+        y: has to be a numpy.array, a vector of dimension m * 1.
+        y_pred: has to be a numpy.array, a vector of dimension m * 1.
+    Returns:
+        r2score: has to be a float.
+    """
+    mse = mean_squared_error(y, y_pred)
+    var = np.sum((y - np.mean(y)) ** 2) 
+    r2score = 1 - mse / var
+    return r2score 
+
+def model_accuracy(y_output:np.ndarray, y_pred:np.ndarray):
+    """ prints ou a model accuracy report """
+    funcs = {'MAE': mean_absolute_error, 'MAPE': mean_absolute_percentage_error, \
+                'MSE': mean_squared_error, 'RMSE': root_mean_squared_error, \
+                'ME': mean_error, 'R2 score': r2score}
+    color = {'ME':'\x1b[38:5:208m' , 'R2 score': '\x1b[38:5:78m'}
+    for key in funcs:
+        col = ''
+        if key in color:
+            col = color[key]
+        print(f'{col}{key}' + ' = {:.4f}'.format(funcs[key](y_output, y_pred)))
+    print(f'\x1b[0m')
+
+
 def estimate_price(x_input:np.ndarray) -> np.ndarray:
     model_file = "./gradient_descent_model/theta.csv"
     try:
@@ -62,12 +75,6 @@ def estimate_price(x_input:np.ndarray) -> np.ndarray:
         print('Error: Linear regression model parameters not found.')
     return theta[0] + x_input * theta[1]
 
-def model_accuracy(y_output:np.ndarray, y_pred:np.ndarray):
-    funcs = {'MAE': mean_absolute_error, 'MAPE': mean_absolute_percentage_error, \
-                'MSE': mean_squared_error, 'RMSE': root_mean_squared_error, \
-                'ME': mean_error, 'R2 score': r2score}
-    for key in funcs:
-        print(key)
 
 if __name__ == "__main__":
     try:

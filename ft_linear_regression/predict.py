@@ -1,6 +1,6 @@
-import numpy as np
 import printout_utils as pout
 from PredictPriceClass import PredictPriceFromModel
+
 
 def main() -> None:
     """ Predicting car price program.
@@ -18,6 +18,7 @@ def main() -> None:
             break
     pout.as_comment("END :)")
     return None
+
 
 if __name__ == "__main__":
     main()

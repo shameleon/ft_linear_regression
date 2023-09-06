@@ -1,5 +1,6 @@
 from DatasetAnalysisClass import CarPriceDatasetAnalysis
 
+
 def test_dataset_analysis_class() -> None:
     """  Training a linear regression model for car price program,
     using gradient descent algorithm.

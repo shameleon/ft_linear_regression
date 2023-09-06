@@ -107,7 +107,7 @@ class CarPriceDatasetAnalysis:
             ask to draw the final plot : dataset with the regression line
         """
         if pout.input_user_yes("Model accuracy statistics") == True:
-            stat.model_accuracy(self.y_output, self.y_pred, self.theta)
+            stat.model_accuracy(self.y_output, self.y_pred)
         if pout.input_user_yes("Plot loss function and parameters over iteration epochs"):
             pout.as_title2("Trained " + self.normalize * "normalized " + "dataset")
             pout.as_check("Subplots for gradient descent algorithm")
