@@ -16,25 +16,26 @@ class CarPriceDatasetAnalysis:
         instantiates LinearRegressionGradientDescent class
         obtains theta parameters from the latest and export it to a file
     """
-    def __init__(self,
-                 source='data.csv',
-                 dest="theta.csv",
-                 normalize=True) -> None:
+    def __init__(self, source='data.csv', dest="theta.csv",
+                 bonus=True) -> None:
         self.source_file = source
         self.dest_file = dest
         self.dest_path = "./gradient_descent_model/"
         self.__load_dataset()
-        self.normalize = normalize
+        self.normalize = True
         self.__normalize_dataset()
+        self.bonus = bonus
         pout.as_check('Dataset ready for training')
         return None
 
     def __load_dataset(self):
         try:
             self.df = pd.read_csv(self.source_file)
-        except (FileNotFoundError, ValueError, IndexError):
-            pout.as_error("Error: could not open file."
-                          + "No data, no model to train.")
+        except (FileNotFoundError, ValueError,
+                TypeError, IndexError, AttributeError) as e:
+            pout.as_error(f'Error: failed to load {self.source_file} file.')
+            print("\t", *e.args)
+            pout.as_cross("\tNo data, no model to train.")
             pout.as_comment("END :(")
             exit(0)
         self.df = self.df.dropna()
@@ -47,8 +48,14 @@ class CarPriceDatasetAnalysis:
 
     def __normalize_dataset(self):
         if self.normalize:
-            self.x_train = stat.normalize(self.x_input)
-            self.y_train = stat.normalize(self.y_output)
+            try:
+                self.x_train = stat.normalize(self.x_input)
+                self.y_train = stat.normalize(self.y_output)
+            except TypeError as e:
+                pout.as_error("Error: Type error")
+                print("\t",*e.args)
+                pout.as_comment("END :(")
+                exit(0)
         else:
             self.x_train = self.x_input
             self.y_train = self.y_input
@@ -73,7 +80,7 @@ class CarPriceDatasetAnalysis:
             theta = np.ones(2)
             delta_y = self.y_pred[-1] - self.y_pred[0]
             delta_x = self.x_input[-1] - self.x_input[0]
-            theta[1] = delta_x / delta_y
+            theta[1] = delta_y / delta_x
             theta[0] = self.y_pred[0] - self.x_input[0] * theta[1]
         else:
             print("Dataset : ", self.gradient_model)
@@ -96,19 +103,23 @@ class CarPriceDatasetAnalysis:
         """
         self.learning_rate = learning_rate
         self.epochs = epochs
-        if pout.input_user_yes('Preview analysis for dataset'):
-            pout.as_title3('Dataset preview')
-            self.dataset_preview()
-        if not pout.input_user_yes("Linear regression training "
-                                   + "with gradient descent algorithm"):
-            # end training prog
-            return None
+        if self.bonus:
+            if pout.input_user_yes('Preview analysis for dataset'):
+                pout.as_title3('Dataset preview')
+                self.dataset_preview()
+            if not pout.input_user_yes("Linear regression training "
+                                    + "with gradient descent algorithm"):
+                return None
         self.gradient_model = LinearRegressionGradientDescent(self.x_train,
                                                               self.y_train)
         self.gradient_model.train_gradient_descent(learning_rate, epochs)
         self.__denormalize_and_save_theta()
         pout.as_check("Model trained")
-        self.__post_training_analysis()
+        if self.bonus:
+            self.__post_training_analysis()
+        else:
+            mean_err = stat.mean_error(self.y_output, self.y_pred)
+            pout.as_title2('Mean_error = {:.4f}'.format(mean_err))
         return None
 
     def __post_training_analysis(self):
@@ -152,8 +163,13 @@ class CarPriceDatasetAnalysis:
 def test_dataset_analysis_class() -> None:
     """ """
     print(CarPriceDatasetAnalysis.__doc__)
-    test_model = CarPriceDatasetAnalysis()
-    test_model.train_dataset(0.2, 500)
+    test_model = CarPriceDatasetAnalysis(bonus=False)
+    test_model.train_dataset(0.5, 100)
+    test_model.train_dataset(0.1, 100)
+    test_model.train_dataset(0.02, 100)
+    test_model.train_dataset(0.5, 500)
+    test_model.train_dataset(0.1, 500)
+    test_model.train_dataset(0.02, 500)
     return None
 
 

@@ -40,8 +40,8 @@ class LinearRegressionGradientDescent:
         """ """
         self.x = x_train
         self.y = y_train
-        pout.as_title('Training a linear regression model \
-                      using gradient descent algorithm')
+        pout.as_title('Training a linear regression model '
+                      + 'using gradient descent algorithm')
         return None
 
     def __save_current_state(self, iter):

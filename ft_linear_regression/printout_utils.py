@@ -15,7 +15,6 @@ COL_BLURED = '\x1b[2;34;41m'
 COL_REDWHI = '\x1b[1;31;47m'
 COL_ERR = '	\x1b[38;5;9m'
 COL_QUERY = '\x1b[2;37;40m'
-COL_QUERY2 = '\x1b[2;37;47m'
 COL_ASKKM = '\x1b[2;34;43m'
 
 
@@ -23,7 +22,7 @@ def printout_title(level: int, mssg: str):
     color = {1: COL_BLUWHI, 2: COL_BLUCYA, 3: COL_BLUWHI}
     if level == 1:
         print(f'\n   {COL_FTLIN}ft_linear regression{COL_RESET}')
-    print(f'{color[level]}' + '-' * 10 + mssg + '-' * 10 + f'{COL_RESET}\n')
+    print(f'{color[level]}' + ' ' * 10 + mssg + ' ' * 10 + f'{COL_RESET}\n')
 
 
 def as_title(mssg: str):
