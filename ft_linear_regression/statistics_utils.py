@@ -11,7 +11,6 @@ class StatisticLinearRegression:
     def __init__(self, x_train: np.ndarray, y_train: np.ndarray):
         self.x = x_train
         self.y = y_train
-        self.calculate_params()
 
     def calculate_params(self) -> None:
         theta = np.zeros(2)
