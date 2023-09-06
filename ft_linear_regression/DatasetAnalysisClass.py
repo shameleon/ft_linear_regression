@@ -25,22 +25,22 @@ class CarPriceDatasetAnalysis:
         self.__load_dataset()
         self.normalize = normalize
         self.__normalize_dataset()
-        pout.print_check('Dataset ready for training')
+        pout.as_check('Dataset ready for training')
         return None
     
     def __load_dataset(self):
         try:
             self.df = pd.read_csv(self.source_file)
         except:
-            pout.print_stderr('Error: could not open file. No data, no model to train.')
-            pout.print_comment("END :(")
+            pout.as_error('Error: could not open file. No data, no model to train.')
+            pout.as_comment("END :(")
             exit(0)
         self.df = self.df.dropna()
         arr = self.df.to_numpy()
         self.x_input = arr[:,0]
         self.y_output = arr[:,1]
         if len(self.x_input) < 2 or len(self.y_output) < 2:
-            pout.print_stderr('Error: datapoints missing, no model to train.')
+            pout.as_error('Error: datapoints missing, no model to train.')
             exit(0)
 
     def __normalize_dataset(self):
@@ -75,7 +75,7 @@ class CarPriceDatasetAnalysis:
         if not os.path.exists(self.dest_path):
             os.makedirs(self.dest_path)
         np.savetxt(f'{self.dest_path + self.dest_file}', theta, delimiter=",")
-        pout.print_result(f'Linear regression model equation to dataset : \n \
+        pout.as_result(f'Linear regression model equation to dataset : \n \
             estimated_price = {theta[0]} + ({theta[1]}) * mileage'.format(theta[0], theta[1]))
         self.theta = theta
 
@@ -89,7 +89,7 @@ class CarPriceDatasetAnalysis:
         self.learning_rate = learning_rate
         self.epochs = epochs
         if pout.input_user_yes('Preview analysis for dataset'):
-            pout.print_title3('Dataset preview')
+            pout.as_title3('Dataset preview')
             self.dataset_preview()
         if not pout.input_user_yes("Linear regression training with gradient descent algorithm"):
             # end training prog
@@ -97,7 +97,7 @@ class CarPriceDatasetAnalysis:
         self.gradient_model = LinearRegressionGradientDescent(self.x_train, self.y_train)
         self.gradient_model.train_gradient_descent(learning_rate, epochs)
         self.__denormalize_and_save_theta()
-        pout.print_check("Model trained")
+        pout.as_check("Model trained")
         self.__post_training_analysis()
         return None
     
@@ -109,14 +109,14 @@ class CarPriceDatasetAnalysis:
         if pout.input_user_yes("Model accuracy statistics") == True:
             stat.model_accuracy(self.y_output, self.y_pred, self.theta)
         if pout.input_user_yes("Plot loss function and parameters over iteration epochs"):
-            pout.print_title2("Trained " + self.normalize * "normalized " + "dataset")
-            pout.print_check("Subplots for gradient descent algorithm")
+            pout.as_title2("Trained " + self.normalize * "normalized " + "dataset")
+            pout.as_check("Subplots for gradient descent algorithm")
             self.gradient_model.plot_all_epochs()
         if pout.input_user_yes("Draw Final Plot : model regression line to trained dataset"):
-            pout.print_title2("Trained dataset")
-            pout.print_check("Final plot for linear regression with gradient descent algorithm")
+            pout.as_title2("Trained dataset")
+            pout.as_check("Final plot for linear regression with gradient descent algorithm")
             self.plot_final()
-        pout.print_comment("END :)")
+        pout.as_comment("END :)")
 
     def plot_final(self):
         y_pred = self.theta[0] + self.x_input * self.theta[1]

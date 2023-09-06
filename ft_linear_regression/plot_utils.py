@@ -1,7 +1,7 @@
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import cm
+import pandas as pd
 
 def plot_dataset(df: pd.DataFrame):
     """ 2D plot of a dataframe"""
@@ -93,5 +93,5 @@ def plot_final(x_train:np.ndarray, y_train:np.ndarray, y_pred:np.ndarray, \
     residual = y_train - y_pred
     ax[1].stem(x_train, residual)
     ax[1].set_xlabel('mileage (km)')
-    ax[1].set_ylabel('residual')
+    ax[1].set_ylabel('residual = predicted - actual')
     plt.show()

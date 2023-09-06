@@ -1,5 +1,5 @@
 import numpy as np
-from printout_utils import print_title, print_comment, input_user_yes
+import printout_utils as pout
 from PredictPriceClass import PredictPriceFromModel
 
 def main() -> None:
@@ -10,13 +10,13 @@ def main() -> None:
     that are eventually found in the source file.
     """
     source_file = "./gradient_descent_model/theta.csv"
-    print_title('PREDICT A CAR PRICE')
+    pout.as_title('PREDICT A CAR PRICE')
     model_prediction = PredictPriceFromModel(source_file)
     while True:
         model_prediction.ask_for_mileage()
-        if not input_user_yes('Continue, for another price prediction'):
+        if not pout.input_user_yes('Continue, for another price prediction'):
             break
-    print_comment("END :)")
+    pout.as_comment("END :)")
     return None
 
 if __name__ == "__main__":

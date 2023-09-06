@@ -1,7 +1,7 @@
 import numpy as np
 import plot_utils as plut
 from statistics_utils import mean_error, model_accuracy
-from printout_utils import print_title, print_title2, print_status, input_user_yes
+from printout_utils import as_title, as_title2, as_status, input_user_yes
 from time import sleep
 
 class LinearRegressionGradientDescent:
@@ -46,7 +46,7 @@ class LinearRegressionGradientDescent:
         """ """
         self.x = x_train
         self.y = y_train
-        print_title('Training a linear regression model using gradient descent algorithm')
+        as_title('Training a linear regression model using gradient descent algorithm')
         return None
     
     def __save_current_state(self, iter):
@@ -63,7 +63,7 @@ class LinearRegressionGradientDescent:
 
     def __init_training(self, learning_rate, epochs):
         """ theta = [biais , weight] """
-        print_status(f'alpha = {learning_rate}     epochs = {epochs}')
+        as_status(f'alpha = {learning_rate}     epochs = {epochs}')
         self.alpha = learning_rate
         self.epochs = epochs
         self.theta = np.zeros(2)
@@ -119,11 +119,11 @@ class LinearRegressionGradientDescent:
 
 def test_gradient_descent_class():
     """ """
-    print_title(f'TEST MODE : LinearRegressionGradientDescent class')
+    as_title(f'TEST MODE : LinearRegressionGradientDescent class')
     print(LinearRegressionGradientDescent.__doc__)
     x_train = np.array([0.1, 0.3, 0.4, 0.8, 1])
     y_train = np.array([ 4, 2.5, 1.5, -1, -1.5  ])
-    print_title2('TEST : small dataset')
+    as_title2('TEST : small dataset')
     test_model = LinearRegressionGradientDescent(x_train, y_train)
     for learning_rate in [0.01, 0.05, 0.1, 0.5]:
         test_model.train_gradient_descent(learning_rate, 100)

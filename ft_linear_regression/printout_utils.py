@@ -19,47 +19,60 @@ COL_QUERY = '\x1b[2;37;40m'
 COL_QUERY2 = '\x1b[2;37;47m'
 COL_ASKKM = '\x1b[2;34;43m'
 
-def print_title(mssg:str):
-    print(f'\n   {COL_FTLIN}ft_linear regression{COL_RESET}')
-    print(f'{COL_BLUWHI}-----------  ' + mssg 
-          + f'  -----------{COL_RESET}\n')
+def printout_title(level:int, mssg:str):
+    color = {1: COL_BLUWHI, 2: COL_BLUCYA, 3: COL_BLUWHI}
+    if level is 1:
+        print(f'\n   {COL_FTLIN}ft_linear regression{COL_RESET}')
+    print(f'{color[level]}' + '-' * 10 + mssg + '-' * 10 + f'{COL_RESET}\n')
 
-def print_title2(mssg:str):
-    print(f'\n{COL_BLUCYA}----------- ' + mssg 
-          + f' -----------{COL_RESET}\n')
+def as_title(mssg:str):
+    printout_title(1, mssg)
+
+def as_title2(mssg:str):
+    printout_title(2, mssg)
     
-def print_title3(mssg:str):
-    print(f'{COL_BLUWHI}----------- ' + mssg 
-          + f' -----------{COL_RESET}\n')
+def as_title3(mssg:str):
+    printout_title(3, mssg)
 
-def print_check(mssg:str):
-    print("✅",f'{COL_BLUWHI}' + mssg + f'{COL_RESET}\n')
+def printout_one_line(color, mssg:str):
+    """ colored one-line printed to stdout"""
+    print(f'{color}{mssg}{COL_RESET}')
 
-def print_cross (mssg:str):
-    print("❌", f'{COL_REDWHI}' + mssg + f'{COL_RESET}\n')
+def as_result(mssg:str):
+    printout_one_line(COL_ORANGE, mssg)
 
-def print_result(mssg:str):
-    # print(f'{COL_GRNWHI}' + mssg + f'{COL_RESET}')
-    print(f'{COL_ORANGE}' + mssg + f'{COL_RESET}\n')
+def as_comment(mssg:str):
+    printout_one_line(COL_GRNWHI, mssg)
 
-def print_stderr(mssg:str):
-    print (f'{COL_ERR}' + mssg + f'{COL_RESET}', file=sys.stderr)
+def as_status(mssg:str):
+    printout_one_line(COL_FTLIN, mssg) 
 
-def print_status(mssg:str):
-    print(f'{COL_FTLIN}' + mssg + f'{COL_RESET}')
+def as_check(mssg:str):
+    print("✅",f'{COL_BLUWHI}{mssg}{COL_RESET}\n')
 
-def print_comment(mssg:str):
-    print(f'{COL_GRNWHI}' + mssg + f'{COL_RESET}')
+def as_cross (mssg:str):
+    print("❌", f'{COL_REDWHI}{mssg}{COL_RESET}\n')
+
+def as_error(mssg:str):
+    print (f'{COL_ERR}{mssg}{COL_RESET}', file=sys.stderr)
 
 def input_user_str(mssg:str) -> str:
-    answer = input(f'{COL_QUERY}' + mssg + f'{COL_ORANGE}   ')
+    """ ask a question to user.
+    When called in a try..except block, it might prevent issues
+    with user possible inputs.
+    Parameter(s): mssg is the question asked to user.
+    Returns : input user as string. """
+    answer = input(f'{COL_QUERY}{mssg}{COL_ORANGE}   ')
     print(f'{COL_RESET}')
     return answer
 
 def input_user_yes(mssg:str, pos_answers = ["y", "yes"] ) -> bool:
+    """ yes or else question to user, supplemented with an ending (Y / N).
+    returns : a boolean.
+        True if answer is in pos_answers . False for any other case"""
     try:
-        answer = input(f'{COL_QUERY}' + mssg + f' (y / n) ? {COL_RESET}')
+        answer = input(f'{COL_QUERY}{mssg} (y / n) ? {COL_RESET}')
     except (EOFError):
-        print_stderr("\nError : unexpected end of file !")
+        as_error("\nError : unexpected end of file !")
         return False
     return answer.lower() in pos_answers

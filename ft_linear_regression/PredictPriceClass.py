@@ -1,6 +1,5 @@
 import numpy as np
-from printout_utils import print_check, print_cross, print_stderr, \
-        print_title2, print_title3, input_user_str
+import printout_utils as pout
 
 
 class PredictPriceFromModel():
@@ -31,9 +30,9 @@ class PredictPriceFromModel():
     def __upload_model(self):
         try:
             self.theta = np.loadtxt(self.model_file)
-            print_check('Linear regression model parameters loaded')
+            pout.as_check('Linear regression model parameters loaded')
         except:
-            print_cross('Linear regression model parameters not found : initialized to default')
+            pout.as_cross('Linear regression model parameters not found : initialized to default')
         print(f'{self.color[1]}\thypothesis :\n\tprice = θ0 + θ1 * mileage')
         print('\tθ0 = {:.2f}     θ1 = {:6f}'.format(self.theta[0], self.theta[1]))
         print(f'{self.color[0]}')
@@ -52,7 +51,7 @@ class PredictPriceFromModel():
     def ask_for_mileage(self):
         """ """
         try:
-            in_str = input_user_str('Please, enter a car mileage (in km) :')
+            in_str = pout.input_user_str('Please, enter a car mileage (in km) :')
             self.mileage = float(in_str)
             if self.mileage < 0 or self.mileage > 1E6:
                 raise InvalidMileageRangeError(self.mileage)
@@ -60,15 +59,15 @@ class PredictPriceFromModel():
             if self.price < 0:
                 raise NegativePredictedPriceError()
         except (RecursionError, RuntimeError, TypeError, ValueError):
-            print_stderr("Error : input is not valid")
+            pout.as_error("Error : input is not valid")
         except (EOFError):
-            print_stderr("Error : unexpected end of file")
+            pout.as_error("Error : unexpected end of file")
         except (NegativePredictedPriceError):
             self.price = 0
             print("Mileage too High: predicted price is set to zero")
             print(self)
         except (InvalidMileageRangeError):
-            print_stderr("Error: mileage is out of range")
+            pout.as_error("Error: mileage is out of range")
         else:
             print(self)
         return None
@@ -93,12 +92,12 @@ class NegativePredictedPriceError(Exception):
 
 def test_predict_price_class(theta_file:str):
     """ tests for PredictPriceFromModel class """
-    print_title2('TEST MODE : PredictPriceFromModel class')
+    pout.as_title2('TEST MODE : PredictPriceFromModel class')
     print(PredictPriceFromModel.__doc__)
-    print_title3('TEST1 : no model')
+    pout.as_title3('TEST1 : no model')
     price_no_model = PredictPriceFromModel("./gradient_descent_model/whatever.csv")
     price_no_model.ask_for_mileage()
-    print_title3('TEST2 : valid model')
+    pout.as_title3('TEST2 : valid model')
     price_model = PredictPriceFromModel("./gradient_descent_model/theta.csv")
     price_model.ask_for_mileage()
 
