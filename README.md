@@ -16,11 +16,12 @@ Two programs :
 
 ```mermaid
   graph TD;
-      A[predict.py]---->B[PredictPrice class];
-      C[model parameters file]---->A[predict.py];
-      A[training.py]---->C[model parameters file];
-      A[training.py]---->D[CarPriceDatasetAnalysis class];
-      D[DatasetAnalysis class]---->E[LinearRegressionGradientDescent class];
+      A[predict.py]--instanciate-->C[PredictPrice class];
+      B[training.py]--instanciate-->D[DatasetAnalysis class];
+      D[DatasetAnalysis class]--instanciate-->E[LinearRegressionGradientDescent class];
+      A[predict.py]--reads-->F[model parameters file]
+      D[DatasetAnalysis class]--writes-->F[model parameters file];
+      D[DatasetAnalysis class]--imports-->G[plots and stats];
       
 ```
 
