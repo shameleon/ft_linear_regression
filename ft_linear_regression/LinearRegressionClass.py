@@ -18,10 +18,10 @@ class LinearRegressionGradientDescent:
             parameters : training dataset as two separate 1D np arrays
         __save_current_state
             saves cost, bias and weight at each iteration
-            displays cost at each iteration
-            sleep in comment
+            cost printed to stdout at each iteration
+            sleep for display rate
         predict_output
-            predicted output is calculated with theta.[1 x]
+            predicted output is calculated with theta
         train_gradient_descent
             (re)initializes with specific learning_rate and epochs
             Training loop
@@ -35,9 +35,15 @@ class LinearRegressionGradientDescent:
         get_mean_error
         __str__
             return: equation as a string
+
+        Static methods :
+            - cost_function
+
+        Parameters : training input, traing output as 1D numpy arrays
+        Return : None
     """
     def __init__(self, x_train: np.ndarray, y_train: np.ndarray) -> None:
-        """ """
+        """ Parameters : training input, traing actual output"""
         self.x = x_train
         self.y = y_train
         pout.as_title('Training a linear regression model '
@@ -45,8 +51,11 @@ class LinearRegressionGradientDescent:
         return None
 
     def __save_current_state(self, iter):
-        """Calculate the model predictions: update_predicted_output
-        np dot(X, theta) """
+        """At each iteration of the training loop:
+        - Loss, biases and weigths are appended to arrays
+        for further analysis over epochs.
+        - loss is displayed on stdout.
+          sleep parameter might be changed to optimize display rate."""
         self.loss.append(self.cost)
         self.biases.append(self.theta[0])
         self.weights.append(self.theta[1])
@@ -58,7 +67,7 @@ class LinearRegressionGradientDescent:
             sleep(0.0005)
 
     def __init_training(self, learning_rate, epochs):
-        """ theta = [biais , weight] """
+        """ theta = [biais , weight] initialized """
         pout.as_status(f'alpha = {learning_rate}     epochs = {epochs}')
         self.alpha = learning_rate
         self.epochs = epochs
@@ -68,6 +77,8 @@ class LinearRegressionGradientDescent:
         self.weights = []
 
     def predict_output(self):
+        """ predicted output for a given theta and input (x) 1D array
+        """
         return self.theta[0] + self.x * self.theta[1]
 
     def train_gradient_descent(self, learning_rate=0.05, epochs=1000):
@@ -92,6 +103,8 @@ class LinearRegressionGradientDescent:
         self.y_pred = self.predict_output()
 
     def plot_all_epochs(self):
+        """Subplots, dataset and loss, bias, weight plotted to epochs
+        get_learning_params"""
         plut.plot_gradient_descent(self.x, self.y, self.y_pred,
                                    self.loss, self.biases, self.weights)
 
@@ -102,10 +115,10 @@ class LinearRegressionGradientDescent:
         return self.theta
 
     def get_model_accuracy(self):
-        stat.model_accuracy(self.y, self.y_pred, self.theta)
+        stat.model_accuracy(self.y, self.y_pred)
 
     def __str__(self):
-        """ """
+        """Returns model equation"""
         with np.printoptions(precision=3, suppress=True):
             equation = 'bias = {}, weight = {}'.format(self.theta[0],
                                                        self.theta[1])
@@ -113,7 +126,7 @@ class LinearRegressionGradientDescent:
 
 
 def test_gradient_descent_class():
-    """ testing with another trained dataset """
+    """ Testing with another trained dataset """
     pout.as_title('TEST MODE : LinearRegressionGradientDescent class')
     print(LinearRegressionGradientDescent.__doc__)
     x_train = np.array([0.1, 0.3, 0.4, 0.8, 1])

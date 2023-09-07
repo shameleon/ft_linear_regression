@@ -32,11 +32,14 @@ $(VENV): $(ACTIVATE)
 list:
 	$(V_PY) -m pip list
 
-flake:
+flake: $(VENV)
 	$(V_FLAKE) $(SRC)
 
-run: $(VENV)
-	$(V_PY) $(SRC)predict_price.py
+predict: $(VENV)
+	$(V_PY) $(SRC)predict.py
+
+training: $(VENV)
+	$(V_PY) $(SRC)training.py
 
 clean:
 	@echo "$(CR) Removing __pycache__ "
@@ -48,7 +51,9 @@ fclean: clean
 	@echo "$(CR) Removing virtual environment.$(CZ)"
 	rm -rf $(VENV)
 
-.PHONY: all list flake run clean fclean
+re: fclean $(VENV)
+
+.PHONY: all list flake predict training clean fclean re
 
 # colors
 CR:=\033[1;31m

@@ -90,9 +90,10 @@ def plot_final(x_train: np.ndarray, y_train: np.ndarray, y_pred: np.ndarray,
     """
     fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(8, 20))
     fig.suptitle(suptitle)
-    ax[0].plot(x_train, y_train, '+', label='Actual trained values')
-    ax[0].plot(x_train, y_pred, label='Predicted values')
-    ax[0].set_title(title, fontsize=10)
+    ax[0].plot(x_train, y_train, '+', label='Actual')
+    ax[0].plot(x_train, y_pred, label='Predicted')
+    ax[0].legend()
+    ax[0].set_title(title, c='orange', fontsize=10)
     ax[0].set_xlabel('mileage (km)')
     ax[0].set_ylabel('price ($)')
     ax[0].grid(alpha=0.5)

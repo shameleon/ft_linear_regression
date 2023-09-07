@@ -10,7 +10,7 @@ def test_dataset_analysis_class() -> None:
     instanciate class LinearRegressionGradientDescent.
     """
     test_model = CarPriceDatasetAnalysis()
-    test_model.train_dataset(0.2, 500)
+    test_model.train_dataset(0.2, 1000)
     return None
 
 

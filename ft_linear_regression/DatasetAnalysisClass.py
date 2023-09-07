@@ -29,6 +29,10 @@ class CarPriceDatasetAnalysis:
         return None
 
     def __load_dataset(self):
+        """ Reads dataset file to numpy 1D arrays.
+            Quality control to the file and the dataset
+            Exception is raised if any problem with the file
+        """
         try:
             self.df = pd.read_csv(self.source_file)
         except (FileNotFoundError, ValueError,
@@ -47,13 +51,16 @@ class CarPriceDatasetAnalysis:
             exit(0)
 
     def __normalize_dataset(self):
+        """ normalize dataset if boolean self.normalize
+            exception is raised if any type issue with numpy arrays
+        """
         if self.normalize:
             try:
                 self.x_train = stat.normalize(self.x_input)
                 self.y_train = stat.normalize(self.y_output)
             except TypeError as e:
                 pout.as_error("Error: Type error")
-                print("\t",*e.args)
+                print("\t", *e.args)
                 pout.as_comment("END :(")
                 exit(0)
         else:
@@ -72,7 +79,38 @@ class CarPriceDatasetAnalysis:
         if pout.input_user_yes("Plot the cost function"):
             plut.plot_cost_function(self.x_train, self.y_train)
 
+    def train_dataset(self, learning_rate=0.05, epochs=100) -> None:
+        """ Instanciate GradientDescent class then train model
+        with training dataset.
+        if needed, denormalizes results to obtain theta
+        from unnormalized dataset.
+        Saves theta to file.
+        Print equation with parameters obtained from gradient descent model.
+        """
+        self.learning_rate = learning_rate
+        self.epochs = epochs
+        if self.bonus:
+            if pout.input_user_yes('Preview analysis for dataset'):
+                pout.as_title3('Dataset preview')
+                self.dataset_preview()
+            if not pout.input_user_yes("Linear regression training "
+                                       + "with gradient descent algorithm"):
+                return None
+        self.gradient_model = LinearRegressionGradientDescent(self.x_train,
+                                                              self.y_train)
+        self.gradient_model.train_gradient_descent(learning_rate, epochs)
+        self.__denormalize_and_save_theta()
+        pout.as_check("Model trained")
+        if self.bonus:
+            self.__post_training_analysis()
+        else:
+            mean_err = stat.mean_error(self.y_output, self.y_pred)
+            pout.as_title2('Mean_error = {:.4f}'.format(mean_err))
+        return None
+
     def __denormalize_and_save_theta(self):
+        """ After training, the resulting Theta for original dataset
+        is obtained from predicted output (y_pred). then saved to file"""
         if self.normalize:
             print("Normalized dataset : ", self.gradient_model)
             y_pred_norm = self.gradient_model.predict_output()
@@ -89,46 +127,17 @@ class CarPriceDatasetAnalysis:
             os.makedirs(self.dest_path)
         np.savetxt(f'{self.dest_path + self.dest_file}', theta, delimiter=",")
         pout.as_result("Linear regression model equation to dataset :")
-        pout.as_result(f'\testimated_price = {theta[0]}'
-                       + ' + ({}) * mileage'.format(theta[1]))
+        pout.as_result('\testimated_price = {:4f}'.format(theta[0])
+                       + ' + ({:4f}) * mileage'.format(theta[1]))
         self.theta = theta
-
-    def train_dataset(self, learning_rate=0.05, epochs=100) -> None:
-        """ Instanciate GradientDescent class then train model
-        with training dataset.
-        if needed, denormalizes results to obtain theta
-        from unnormalized dataset.
-        Saves theta to file.
-        Print equation with parameters obtained from gradient descent model.
-        """
-        self.learning_rate = learning_rate
-        self.epochs = epochs
-        if self.bonus:
-            if pout.input_user_yes('Preview analysis for dataset'):
-                pout.as_title3('Dataset preview')
-                self.dataset_preview()
-            if not pout.input_user_yes("Linear regression training "
-                                    + "with gradient descent algorithm"):
-                return None
-        self.gradient_model = LinearRegressionGradientDescent(self.x_train,
-                                                              self.y_train)
-        self.gradient_model.train_gradient_descent(learning_rate, epochs)
-        self.__denormalize_and_save_theta()
-        pout.as_check("Model trained")
-        if self.bonus:
-            self.__post_training_analysis()
-        else:
-            mean_err = stat.mean_error(self.y_output, self.y_pred)
-            pout.as_title2('Mean_error = {:.4f}'.format(mean_err))
-        return None
 
     def __post_training_analysis(self):
         """
-        - perform statistic analysis with dataset output
+        - Performs statistic analysis with dataset output
         and trained model parameters.
-        - plot loss and parameters to epochs during the run of
+        - Plots loss and parameters to epochs during the run of
         gradient descent algorithm.
-        - draw the final plot : dataset with the regression line.
+        - Draw the final plot : dataset with the regression line.
         """
         if pout.input_user_yes("Model accuracy statistics"):
             stat.model_accuracy(self.y_output, self.y_pred)
@@ -147,6 +156,8 @@ class CarPriceDatasetAnalysis:
         pout.as_comment("END :)")
 
     def plot_final(self):
+        """ final plot represent dataset with reegression line
+        and a second panel showing residual output """
         y_pred = self.theta[0] + self.x_input * self.theta[1]
         suptitle = ('ft_linear regression : gradient descent algorithm')
         title = self.gradient_model.get_learning_params()
@@ -154,22 +165,20 @@ class CarPriceDatasetAnalysis:
         plut.plot_final(self.x_input, self.y_output, y_pred, suptitle, title)
 
     def __str__(self):
-        with np.printoptions(precision=3, suppress=True):
-            equation = '\nestimated_price = {:.4f} \
-                + ({:.4f}) * mileage'.format(self.theta[0], self.theta[1])
+        """ Equation hypothesis to the linear regression model """
+        equation = '\nestimated_price = {:.4f}'.format(self.theta[0])
+        equation += ' + ({:.4f}) * mileage'.format(self.theta[1])
         return equation
 
 
 def test_dataset_analysis_class() -> None:
-    """ """
+    """ train a model with different learning rates epochs
+    bonus = false will deactivate options such as plots and most stats"""
     print(CarPriceDatasetAnalysis.__doc__)
     test_model = CarPriceDatasetAnalysis(bonus=False)
-    test_model.train_dataset(0.5, 100)
-    test_model.train_dataset(0.1, 100)
-    test_model.train_dataset(0.02, 100)
-    test_model.train_dataset(0.5, 500)
-    test_model.train_dataset(0.1, 500)
-    test_model.train_dataset(0.02, 500)
+    for learning_rate in [0.02, 0.1, 0.5]:
+        for epochs in [100, 500, 2000]:
+            test_model.train_dataset(learning_rate, epochs)
     return None
 
 
