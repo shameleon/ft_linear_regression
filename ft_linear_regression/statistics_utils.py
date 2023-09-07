@@ -1,5 +1,16 @@
 import numpy as np
 
+"""statistics_utlis.py:
+
+Usage:
+import statistics_utlis as stats
+
+- provides metrics for linear regression analysis
+  and a model accuracy report
+"""
+
+__author__ = "jmouaike"
+
 
 """ ################ statistics utils ################ """
 

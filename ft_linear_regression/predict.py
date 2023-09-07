@@ -1,6 +1,14 @@
 import printout_utils as pout
 from PredictPriceClass import PredictPriceFromModel
 
+"""predict.py:
+
+Program to predict a car price from a user-given mileage
+
+"""
+
+__author__ = "jmouaike"
+
 
 def main() -> None:
     """ Predicting car price program.

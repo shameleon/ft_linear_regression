@@ -4,6 +4,14 @@ import plot_utils as plut
 import statistics_utils as stat
 import printout_utils as pout
 
+"""LinearRegressionClass.py:
+
+LinearRegressionGradientDescent class
+performs more basic regression
+"""
+
+__author__ = "jmouaike"
+
 
 class LinearRegressionGradientDescent:
     """ class LinearRegressionGradientDescent

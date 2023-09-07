@@ -1,6 +1,16 @@
 import numpy as np
 import printout_utils as pout
 
+"""PredictPrice.py:
+
+class PredictPriceFromModel
+predict a car price from a user-given mileage
+
+requires Linear regression model parameters file
+"""
+
+__author__ = "jmouaike"
+
 
 class PredictPriceFromModel():
     """ class for predicting price for a given mileage

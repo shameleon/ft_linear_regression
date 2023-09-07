@@ -1,5 +1,16 @@
 from DatasetAnalysisClass import CarPriceDatasetAnalysis
 
+"""training.py:
+
+Programm to train a linear regression model
+based on gradient descent algorithm.
+
+a car price to mileage datasetdata.csv is required
+
+"""
+
+__author__ = "jmouaike"
+
 
 def test_dataset_analysis_class() -> None:
     """  Training a linear regression model for car price program,

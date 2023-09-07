@@ -1,5 +1,18 @@
 import sys
 
+"""printout_utlis.py:
+
+Usage:
+import printout_utlis as pout
+
+add a colored and customizable
+- output to terminal stdout and stderr.
+- asks for terminal user input
+"""
+
+__author__ = "jmouaike"
+
+
 """ color code
 https://talyian.github.io/ansicolors/ """
 COL_RESET = '\x1b[0m'

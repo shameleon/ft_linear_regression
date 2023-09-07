@@ -3,6 +3,17 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 import pandas as pd
 
+"""plot_utlis.py:
+
+Usage:
+import plot_utlis as plut
+
+- Provides plotting features for linear regression analysis
+
+"""
+
+__author__ = "jmouaike"
+
 
 def plot_dataset(df: pd.DataFrame):
     """ 2D plot of a dataframe """

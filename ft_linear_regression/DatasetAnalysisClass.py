@@ -6,6 +6,24 @@ import plot_utils as plut
 import statistics_utils as stat
 import printout_utils as pout
 
+"""DatasetAnalysisClass.py:
+
+CarPriceDatasetAnalysis class
+
+performs Linear Regression with gradient descent
+with many additional features :
+    dataset safeguards
+    normalization, denormalization
+    verbose mode
+    plots for dataset and model
+    plots for loss function
+    plots for gradient descent
+    data persistence for model parameters
+    a model accuracy report to measure the model error
+"""
+
+__author__ = "jmouaike"
+
 
 class CarPriceDatasetAnalysis:
     """
