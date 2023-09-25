@@ -26,15 +26,15 @@ A **second program** is training the model, from a ```data.csv``` train set. Acc
 
 ---
 
-### the dataset to train
+### Dataset to train
 
-Car _mileage_ (in Km) as inputs, car _price_ as output
+Car _mileage_ as inputs, car _price_ as output
 km|price|
 :---:|:---:
 240000 |3650|
 139800 |3800|
 150500 |4400|
-
+...|...|
 
 ## My solution to the subject requirements
 
@@ -72,33 +72,40 @@ _Makefile_ capabilities was used to set up _virtual environment_ for **Python**.
 
 The objective is to find a solution to the linear hypothesis model.
 
-For multivple linear regression, the output, _response_ ($Y$) linearily depends on a discrete number of $k$ independent variables ($X_j$) also called _predictors_.
+For multiple linear regression, the output _response_ ($Y$) linearily depends on a discrete number of $k$ independent variables ($X_j$) also called _predictors_.
 With  $\theta_j$, as Weights of the hypothesis for $j$ being the feature index number (from 1 to k).
 
 $$y = \theta_0 + \theta_1 * x_1 + \theta_2 * x_2 + ... + \theta_k * x_k$$
 
-In our model, the hypothesis is that _price_ is depending only on _mileage_, therefore $\theta_0$ and $\theta_1$ are the weigths to be found by our algorithm.
+In our model, the hypothesis is that _price_ is depending only on _mileage_, therefore $\theta_0$ and $\theta_1$ are the two weigths to be found by our algorithm.
 
-For any x input value, and more specifically any $x_i$, there is an output predicted value $h(x_i)$, that can be calculated with the following linear relationship :
+For any x input value, and more specifically any $x_i$, an output predicted value $h(x_i)$ can be calculated with the following linear relationship :
 
 $$h(x_i)=\theta_0 +  \Theta_1 * x_i$$
 
-For any given $x_i$, the calculated predicted value $h(x_i)$ might differ from the real value of $y_i$
+For any given $x_i$, the calculated predicted value $h(x_i)$ might differ from the real value of $y_i$. These residual are specific to each $x_i$ but also to each $[\theta_0,  \Theta_1]$ pair at any step of learning.
 
-The linear-fit relationship to the given dataset is based on the **Sum of Squared Residuals Method**, trying to find the miniminal $$\sum_{i=0}^m-1 (h(x_i) - y_i)^2$$ at the end of the learning process,
+### Gradient descent
+
+The linear-fit relationship to the given dataset is based on the **Sum of Squared Residuals Method**, trying to find the minimize $$\sum_{i=0}{m-1} (h(x_i) - y_i)^2$$ during the learning process,
 
 The **cost function** of the linear regression $J(\theta_0, \theta_2)$, measures the Root Mean Squared error between the predicted value (pred) and true value (y).
 
-$$J(\theta_0, \theta_1) =  1 / (2*m) * \left( \sum_{k=1}^m (h(x_i)-y_i)^2 \right)$$ 
+$$J(\theta_0, \theta_1) =  \frac{1}{2m} * \sum_{k=1}^m (h(x_i)-y_i)^2$$
 
-![](https://lh4.googleusercontent.com/arnL-sR0q4Evfgpb3b8e7YwldPQvS9YxFWcvHVikTYeshX2z_z7pW2B189kuCseBPe-bJabS4384cjzJKJL-HZHE1uS1h92whqhKitt-KkTYhTyWOG9sIYHiyFDYoop1fYryjpip)
+ The ```gradient descent algorithm``` consists of calculating the _partial derivatives_
+ to either $theta_0$ or $theta_0$.
 
-![gradient descent](https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/)
--> θj     : Weights of the hypothesis.
--> hθ(xi) : predicted y value for ith input.
--> j     : Feature index number (can be 0, 1, 2, ......, n).
--> α     : Learning Rate of Gradient Descent.
-![](https://media.geeksforgeeks.org/wp-content/uploads/Cost-Function.jpg)
+![Formulas for Gradient descent](https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/)
 
-from 
-![](https://www.geeksforgeeks.org/how-to-implement-a-gradient-descent-in-python-to-find-a-local-minimum/)
+ $\alpha$     : Learning Rate of Gradient Descent.
+
+### In summary
+**Basically, at any step of the learning process:
+  The pair $[\theta_0,  \Theta_1]$ allows to calculate
+  • the cost function J(\theta_0, \theta_2)$ given all the $x_i$ of the trainset.
+  • the partial derivative for $theta_0$
+  • the partial derivative for $theta_1$
+  • update the $[\theta_0,  \Theta_1]$ pair accordingly
+
+At each iteration, cost function 
