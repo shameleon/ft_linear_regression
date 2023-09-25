@@ -70,21 +70,24 @@ _Makefile_ capabilities was used to set up _virtual environment_ for **Python**.
 
 ### Linear regression
 
-The objective is to find a solution to the linear hypothesis model:
-  θj     :  Weights of the hypothesis.
-$\sqrt{x}$
+The objective is to find a solution to the linear hypothesis model.
 
-For each input value ```math x_i```, there is an output predicted value ```h(x_i)```, that can be calculated with the following linear relationship :
+For multivple linear regression, the output, _response_ ($Y$) linearily depends on a discrete number of $m$ independent variable ($X_j$) also called _predictors_.
+With  $\theta_j$, as Weights of the hypothesis:
 
-```math
-h(x_i)=θ_0 +  \Theta_1 * x_i
-```
+$$y = \theta_0 + \theta_1 * x_1 + \theta_2 * x_2 + ... + \theta_m-1 * x_(m-1)$$
 
-$$h(x_i)=θ_0 +  \Theta_1 * x_i$$
+In our model, the hypothesis is that _price_ is depending only on _mileage_.
 
-the predicted value
+$\theta_0$ and $\theta_1$  are the weigths to be found by our algorithm.
 
-The linear-fit relationship to the given dataset is based on the **Sum of Squared Residuals Method**.
+For each input value $x_i$, there is an output predicted value $h(x_i)$, that can be calculated with the following linear relationship :
+
+$$h(x_i)=\theta_0 +  \Theta_1 * x_i$$
+
+For any given $x_i$, the calculated predicted value $h(x_i)$ might differ from the real value of $y_i$
+
+The linear-fit relationship to the given dataset is based on the **Sum of Squared Residuals Method**. $$sum(h(x_i) - y_i)^2$$, 
 
 The cost function of the linear regression J(θ0, θ1), measures the Root Mean Squared error between the predicted value (pred) and true value (y).
 
