@@ -4,30 +4,41 @@
 
 42 school project **ft_linear_regression** could be seen as an entrypoint to datascience branch of the curriculum.
 
-It consists of implementing a ```simple linear regression with a single feature``` from scratch. Choice of programming language is free but should suitable for visualizing data. Using librairies is authorized, except for the ones that does all the work.For example, using python’s ```numpy.polynomial()``` function or ```scikit-learn``` library is considered cheating.
+It consists of implementing a ```simple linear regression with a single feature```, from scratch. Choice of programming language is free but should suitable for visualizing data. Using librairies is authorized, except for the ones that does all the work.For example, using python’s ```numpy.polynomial()``` function or ```scikit-learn``` library is considered cheating.
 
 ### Mandatory Part
 
-A **first program** is predicting the price of a car for a given mileage. The prediction is based on a the model hypothesis
+A **first program** is predicting the price of a car for a given mileage. The prediction is based on the following model **hypothesis**
 
-**hypothesis**
 `estimatePrice(mileage) = θ0 + (θ1 ∗ mileage)`
 
 where parameters **thetas** are set to 0 by default, if training did not occur yet.
 
-a **second program** is training the model, from a ```data.csv``` train set. According to the hypothesis, both parameters **thetas** are updated with **gradient-descent** algorithm.
+A **second program** is training the model, from a ```data.csv``` train set. According to the hypothesis, both parameters **thetas** are updated with **gradient-descent** algorithm.
 
 ### Bonus part
 
 • Plotting the data into a graph to see repartition.
+
 • Plotting the line resulting from linear regression training into the same graph.
+
 • Calculating the precision of the implemented algorithm.
 
 ---
 
+### the dataset to train
+
+Car _mileage_ (in Km) as inputs, car _price_ as output
+km|price|
+:---:|:---:
+240000 |3650|
+139800 |3800|
+150500 |4400|
+
+
 ## My solution to the subject requirements
 
-To implement linear regression from scratch, I chose **Python** language supplented with the use of ```numpy```, ```pandas``` and ```matplotlib``` librairies.
+To implement linear regression from scratch, I chose **Python** language and ```numpy```, ```pandas``` and ```matplotlib``` librairies.
 
 ### Virtual environment
 
@@ -60,15 +71,25 @@ _Makefile_ capabilities was used to set up _virtual environment_ for **Python**.
 ### Linear regression
 
 The objective is to find a solution to the linear hypothesis model:
+  θj     :  Weights of the hypothesis.
+$\sqrt{x}$
+
+For each input value ```math x_i```, there is an output predicted value ```h(x_i)```, that can be calculated with the following linear relationship :
 
 ```math
-h(x)=θ0 + θ1 * x
+h(x_i)=θ_0 +  \Theta_1 * x_i
 ```
+
+$$h(x_i)=θ_0 +  \Theta_1 * x_i$$
+
+the predicted value
 
 The linear-fit relationship to the given dataset is based on the **Sum of Squared Residuals Method**.
 
 The cost function of the linear regression J(θ0, θ1), measures the Root Mean Squared error between the predicted value (pred) and true value (y).
- 
+
+
+
 ![](https://lh4.googleusercontent.com/arnL-sR0q4Evfgpb3b8e7YwldPQvS9YxFWcvHVikTYeshX2z_z7pW2B189kuCseBPe-bJabS4384cjzJKJL-HZHE1uS1h92whqhKitt-KkTYhTyWOG9sIYHiyFDYoop1fYryjpip)
 
 ![gradient descent](https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/)
