@@ -83,7 +83,7 @@ For any x input value, and more specifically any $x_i$, an output predicted valu
 
 $$h(x_i)=\theta_0 +  \Theta_1 * x_i$$
 
-For any given $x_i$, the calculated predicted value $h(x_i)$ might differ from the real value of $y_i$. These residual are specific to each $x_i$ but also to each $[\theta_0,  \Theta_1]$ pair at any step of learning.
+For any given $x_i$, the calculated predicted value $h(x_i)$ might differ from the real value of $y_i$. These residual are specific to each $x_i$ but also to each $[\theta_0,  \theta_1]$ pair at any step of learning.
 
 ### Gradient descent
 
@@ -93,8 +93,9 @@ The **cost function** of the linear regression $J(\theta_0, \theta_2)$, measures
 
 $$J(\theta_0, \theta_1) =  \frac{1}{2m} * \sum_{k=1}^m (h(x_i)-y_i)^2$$
 
- The ```gradient descent algorithm``` consists of calculating the _partial derivatives_
- to either $theta_0$ or $theta_0$.
+ The ```gradient descent algorithm``` consists of calculating the _partial derivatives_ to either $theta_0$ or $theta_1$.
+
+ To keep it simple, the slope of the cost function according to each $\theta$ direction, orientates us toward the minimal cost and tells if that $\theta$ needs to be increased or decreased. In addition to that, it also allows to update the value of that same given $\theta$.
 
 ![Formulas for Gradient descent](https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/)
 
@@ -102,10 +103,10 @@ $$J(\theta_0, \theta_1) =  \frac{1}{2m} * \sum_{k=1}^m (h(x_i)-y_i)^2$$
 
 ### In summary
 **Basically, at any step of the learning process:
-  The pair $[\theta_0,  \Theta_1]$ allows to calculate
+  The pair $[\theta_0,  \theta_1]$ allows to calculate
   • the cost function J(\theta_0, \theta_2)$ given all the $x_i$ of the trainset.
   • the partial derivative for $theta_0$
   • the partial derivative for $theta_1$
-  • update the $[\theta_0,  \Theta_1]$ pair accordingly
+  • update the $[\theta_0,  \theta_1]$ pair accordingly
 
 At each iteration, cost function 
