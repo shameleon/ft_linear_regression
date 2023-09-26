@@ -1,6 +1,6 @@
 import numpy as np
 
-"""statistics_utlis.py:
+"""statistics_utils.py:
 
 Usage:
 import statistics_utlis as stats
