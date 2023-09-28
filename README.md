@@ -106,9 +106,9 @@ graph TD;
   A[predict.py]-->|instanciate|B[class <br> PredictPriceFromModel];
   C{model  <br>  parameters  <br> persistency}--read-->A[predict.py];
   D[training.py]--instanciates-->E[class  <br> CarPriceDatasetAnalysis];
-  E[class  <br> CarPriceDatasetAnalysis]--instanciates-->F[class  <br> LinearRegressionGradientDescent];
+  E[class  <br> CarPriceDatasetAnalysis]-->F[class  <br> LinearRegressionGradientDescent];
   E[class  <br> CarPriceDatasetAnalysis]--writes-->C{model  <br>  parameters  <br> persistency};
-  F{car price <br>  training  <br> dataset}--read-->E[class  <br> CarPriceDatasetAnalysis];
+  G{car price <br>  training  <br> dataset}--read-->E[class  <br> CarPriceDatasetAnalysis];
 ```
 
 ### Training
@@ -191,7 +191,7 @@ This interactivity also allow to skip optional features to focus on  **training 
 
 Providing many plots, using `matplotlib`.
 
-* 3D plot : **cost function** $J(\theta_0, \theta_1)$, log-scaled. Allows a Visual explanation of `minimal cost(s)` point(s) and `gradient descent`.`
+* 3D plot : **cost function** $J(\theta_0, \theta_1)$, log-scaled. Allows a visual explanation for `minimal cost(s)` point(s) and `gradient descent`.`
 * Scatterplot of the trained dataset.
 * Same scatterplot with the regression line. The equation, leraning rate and epochs and shown.
 * Plot of cost function** $J(\theta_0, \theta_1)$ over epochs, to show the descent to the minimal cost.
