@@ -1,35 +1,11 @@
 # ft_linear_regression
 
-## Subject : ft_linear_regression
-
 42 school project **ft_linear_regression** could be seen as an entrypoint to _datascience_ branch of 42 so-called ```outer-circle``` curriculum.
 This project is an introduction the field.
 
-It consists of implementing a ```simple linear regression with a single feature```, from scratch. Choice of programming language is free but should suitable for visualizing data. Using librairies is authorized, except for the ones that does all the work.For example, using python’s ```numpy.polynomial()``` function or ```scikit-learn``` library is considered cheating.
+## Subject
 
-### Mandatory Part
-
-A **first program** is predicting the price of a car for a given mileage. The prediction is based on the following model **hypothesis**
-
-`estimatePrice(mileage) = θ0 + (θ1 ∗ mileage)`
-
-where parameters **thetas** are set to 0 by default, if training did not occur yet.
-
-A **second program** is training the model, from a ```data.csv``` train set. According to the hypothesis, both parameters **thetas** are updated with **gradient-descent** algorithm.
-
-The two programs cannot directly communicate. Model parameters issued from training dataset, should be stored and be accessible independently of runtime (**Data persistency**).
-
-### Bonus part
-
-• Plotting the data into a graph to see repartition.
-
-• Plotting the line resulting from linear regression training into the same graph.
-
-• Calculating the precision of the implemented algorithm.
-
-• Any feature making sense  
-
----
+The objective is to implement a ```simple linear regression with a single feature```, _from scratch_. The choice of programming language is free, but should suitable for visualizing data. Using librairies is authorized, except for the ones that does all the work.For example, using python’s ```numpy.polynomial()``` function or ```scikit-learn``` library would be considered as cheating.
 
 ### Dataset to train
 
@@ -42,14 +18,40 @@ km|price|
 150500 |4400|
 ...|...|
 
+[data.csv](./data.csv)
+
+### Mandatory Part
+
+A **first program** `predict.py` is predicting the price of a car for a given mileage. The prediction is based on the following model **hypothesis** :
+
+`estimatePrice(mileage) = θ0 + (θ1 ∗ mileage)`
+
+Parameters **thetas** are set to 0 by default, if training did not occur yet.
+
+A **second program** `training.py` is training the model, from a ```data.csv``` train set. According to the hypothesis, both parameters **thetas** are updated with **gradient-descent** algorithm.
+
+The two programs cannot directly communicate. Model parameters issued from training dataset, should be stored and be accessible independently of runtime (**Data persistency**).
+
+### Bonus part
+
+• Plotting the data into a graph to see repartition.
+
+• Plotting the line resulting from linear regression training into the same graph.
+
+• Calculating the precision of the implemented algorithm.
+
+• Any feature that is making sense  
+
 ---
 
-## My solution to the subject requirements
+## My solution to ft_linear_regression
 
 To implement linear regression from scratch, I chose **Python** language.
 Librairies : The power of ```numpy```, a pinch of ```pandas``` and ```matplotlib``` for visualisation.
 
-### Virtual environment
+### Usage
+
+#### Virtual environment
 
 a  _virtual environment_ is necessary so that python and its dependencies are running is an isolated manner, independently from python of the host machine. Virtualization with the help of ```Docker``` could be a way to do that in a more complex context. Here, only python installer ```pip```, ```python3``` and few libraries are needed.Thus, ```virtualenv``` is the most straightforward tool ([virtualenv doc.](https://virtualenv.pypa.io/en/latest/) and [python doccs](https://docs.python.org/3/tutorial/venv.html)) and can install a _virtual environment_  from these shell command :
 
@@ -58,15 +60,7 @@ virtualenv ./venv/
 /venv/bin/pip install -r requirements.txt
 ```
 
-Activation of the virtual environment :
-
-```shell
-source /venv/bin/activate
-```
-
-This will change the shell prompt, and allow to directly use ```pip``` or ```python``` of the ```venv``` with only one word instead of ```/venv/bin/``` prefix.
-
-I used _Makefile_ capabilities to set up _virtual environment_ for **Python**, run programs or clean files. Of course, there is no compilation there since **Python** is an interpreted language.
+_Makefile_ capabilities were usedto set up _virtual environment_ for **Python**, run programs or clean files. Of course, there is no compilation occuring since **Python** is an interpreted language.
 
 ```make``` command will install the virtual environment with dependencies specified in the ```requirements.txt``` file.
 
@@ -80,18 +74,46 @@ I used _Makefile_ capabilities to set up _virtual environment_ for **Python**, r
 
 ```make fclean``` to remove the virtual environement after applying the ```clean``` rule.
 
-### Project organization
+#### Run `predict.py` or `training.py`
+
+After, that virtual environment and requirements are installed.
+
+Run with virtual environment python
+
+```shell
+venv/bin/python predict.py
+```
+
+Otherwise Activate of the virtual environment
+
+```shell
+source /venv/bin/activate
+```
+
+This will change the shell prompt, to `(venv)` and allow to directly use `venv/bin/`.
+Type only ```pip``` or ```python``` of the ```venv``` with only one word, no need for ```/venv/bin/``` prefix.
+
+```shell
+python predict.py
+```
+
+### Organization
+
+### Classes and files
 
 ```mermaid
 graph TD;
-    A[predict.py]--instanciate-->D[DatasetAnalysis class];
-    C[model parameters file]--read-->A[predict.py];
-    A[training.py]--instanciates-->D[CarPriceDatasetAnalysis class];
-    D[DatasetAnalysis class]--writes-->C[model parameters file];
-    D[DatasetAnalysis class]--instanciates-->E[LinearRegressionGradientDescent class];
+  A[predict.py]-->|instanciate|B[class <br> PredictPriceFromModel];
+  C{model  <br>  parameters  <br> persistency}--read-->A[predict.py];
+  D[training.py]--instanciates-->E[class  <br> CarPriceDatasetAnalysis];
+  E[class  <br> CarPriceDatasetAnalysis]--instanciates-->F[class  <br> LinearRegressionGradientDescent];
+  E[class  <br> CarPriceDatasetAnalysis]--writes-->C{model  <br>  parameters  <br> persistency};
+  F{car price <br>  training  <br> dataset}--read-->E[class  <br> CarPriceDatasetAnalysis];
 ```
 
-### Linear regression
+### Training
+
+#### Linear regression
 
 The objective is to find a solution to the linear hypothesis model.
 
@@ -149,22 +171,30 @@ Developped explanation are found here.
   • the partial derivative for $theta_1$
   • update the $[\theta_0,  \theta_1]$ pair accordingly.
 
----
+### ft_linear_regression functionalities
+
+#### Interactivity and optimisation
+
+In addition to the algoritmic implementation, there is other functional aspects.
+At the runtime, `user's input` with `(Y/N)` allow to control training and plotting features.
+This interactivity also allow to skip optional features to focus on  **training parameter optimisation** , `learning rate` and `epochs`.
 
 #### Dataset training
 
-* **normalization** of the dataset. The values are in thousands order of magnitude (both _mileage_ and _price_).
+* **normalization** of the dataset. The values are in thousands order of magnitude (both _mileage_ and _price_) and needed to be scaled.
 
-* **data_persistence** : Subsequently, linear regression parameters has to be stored in a file, so that the model could be further used by the ```predict.py``` program.
+* **data persistency** : Subsequently, linear regression parameters has to be stored in a file, so that the model could be further used by the ```predict.py``` program.
 
 * **model metrics** for linear regression analysis and a model accuracy report. [statistics_utils.py](./ft_linear_regression/statistics_utils.py)
 
 #### Plots
 
-* 3D plot : cost function** $J(\theta_0, \theta_1)$
-* scatterplot of the trained dataset.
-* same scatterplot with the regression line. The equation, leraning rate and epochs and shown.
-* plot of cost function** $J(\theta_0, \theta_1)$ over epochs, to show the descent to the minimal cost.
+Providing many plots, using `matplotlib`.
+
+* 3D plot : **cost function** $J(\theta_0, \theta_1)$, log-scaled. Allows a Visual explanation of `minimal cost(s)` point(s) and `gradient descent`.`
+* Scatterplot of the trained dataset.
+* Same scatterplot with the regression line. The equation, leraning rate and epochs and shown.
+* Plot of cost function** $J(\theta_0, \theta_1)$ over epochs, to show the descent to the minimal cost.
 * plot of hypothesis parameters $\theta_0$ and $\theta_1$ over epochs.
 
 #### Prediction program
