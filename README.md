@@ -3,15 +3,35 @@
 42 school project **ft_linear_regression** could be seen as an entrypoint to _datascience_ branch of 42 so-called ```outer-circle``` curriculum.
 This project is an introduction the field.
 
+[Preview](#preview)
+
+[Subject](#subject)
+
+  [- Dataset](#dataset-to-train)
+
+  [- Mandatory](#mandatory-part)
+
+  [- Bonus](#bonus-part)
+
+[My solution to linear regression](#my-solution-to-ft_linear_regression)
+
+  [- Usage](#usage) : [venv](#virtual-environment) and [run](#run)
+
+  [- Classes and files](#classes-and-files)
+
+  [- Training](#training) : predicting output values with gradient descent algorithm
+
+[ft_linear_regression functionalities](#ft_linear_regression-functionalities)
+
 ## Preview
 
 Figure 1. Loss surface visualization. Cost function $J(\theta_0, \theta_1)$ is represented on a log scale.
 
-[loss_function](/screenshots/3D_plot.png)
+![loss_function](/screenshots/3D_plot.png)
 
 Figure 2. Model Training. Left panel: normalized dataset scatterplot representation, with the line to the predicted value after training. Right panels:  Cost function, $\theta_0$, and $\theta_1)$ are represented through epochs (training iterations).
 
-[model training](/screenshots/params_through_epochs.png)
+![model training](/screenshots/params_through_epochs.png)
 
 ## Subject
 
@@ -84,7 +104,9 @@ _Makefile_ capabilities were usedto set up _virtual environment_ for **Python**,
 
 ```make fclean``` to remove the virtual environement after applying the ```clean``` rule.
 
-#### Run `predict.py` or `training.py`
+#### Run
+
+Run with `predict.py` or `training.py`
 
 After, that virtual environment and requirements are installed.
 
@@ -106,8 +128,6 @@ Type only ```pip``` or ```python``` of the ```venv``` with only one word, no nee
 ```shell
 python predict.py
 ```
-
-### Organization
 
 ### Classes and files
 
