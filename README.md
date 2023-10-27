@@ -3,6 +3,16 @@
 42 school project **ft_linear_regression** could be seen as an entrypoint to _datascience_ branch of 42 so-called ```outer-circle``` curriculum.
 This project is an introduction the field.
 
+## Preview
+
+Figure 1. Loss surface visualization. Cost function $J(\theta_0, \theta_1)$ is represented on a log scale.
+
+[loss_function](/screenshots/3D_plot.png)
+
+Figure 2. Model Training. Left panel: normalized dataset scatterplot representation, with the line to the predicted value after training. Right panels:  Cost function, $\theta_0$, and $\theta_1)$ are represented through epochs (training iterations).
+
+[model training](/screenshots/params_through_epochs.png)
+
 ## Subject
 
 The objective is to implement a ```simple linear regression with a single feature```, _from scratch_. The choice of programming language is free, but should suitable for visualizing data. Using librairies is authorized, except for the ones that does all the work.For example, using python’s ```numpy.polynomial()``` function or ```scikit-learn``` library would be considered as cheating.
