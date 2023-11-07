@@ -3,25 +3,16 @@
 42 school project **ft_linear_regression** could be seen as an entrypoint to _datascience_ branch of 42 so-called ```outer-circle``` curriculum.
 This project is an introduction the field.
 
-[Preview](#preview)
-
-[Subject](#subject)
-
-  [- Dataset](#dataset-to-train)
-
-  [- Mandatory](#mandatory-part)
-
-  [- Bonus](#bonus-part)
-
-[My solution to linear regression](#my-solution-to-ft_linear_regression)
-
-  [- Usage](#usage) : [venv](#virtual-environment) and [run](#run)
-
-  [- Classes and files](#classes-and-files)
-
-  [- Training](#training) : predicting output values with gradient descent algorithm
-
-[ft_linear_regression functionalities](#ft_linear_regression-functionalities)
+- [Preview](#preview)
+- [Subject](#subject)
+  - [Dataset](#dataset-to-train)
+  - [Mandatory](#mandatory-part)
+  - [Bonus](#bonus-part)
+- [My solution to linear regression](#my-solution-to-ft_linear_regression)
+  - [Usage](#usage) : [venv](#virtual-environment) and [run](#run)
+  - [Classes and files](#classes-and-files)
+  - [Training](#training) : predicting output values with gradient descent algorithm
+- [ft_linear_regression functionalities](#ft_linear_regression-functionalities)
 
 ## Preview
 
