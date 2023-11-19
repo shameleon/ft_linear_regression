@@ -1,7 +1,8 @@
 # ft_linear_regression
 
-42 school project **ft_linear_regression** could be seen as an entrypoint to _datascience_ branch of 42 so-called ```outer-circle``` curriculum.
-This project is an introduction the field.
+42 school project **ft_linear_regression** could be seen as an entrypoint to the _data science_ branch of 42-school, in the ```outer-circle``` holygraph.
+This project is an introduction the field and does not have the pretention to be a fancy data science project.
+Machine learning modules, and any module doing the job, are forbidden.
 
 - [Preview](#preview)
 - [Subject](#subject)
@@ -26,7 +27,7 @@ Figure 2. Model Training. Left panel: normalized dataset scatterplot representat
 
 ## Subject
 
-The objective is to implement a ```simple linear regression with a single feature```, _from scratch_. The choice of programming language is free, but should suitable for visualizing data. Using librairies is authorized, except for the ones that does all the work.For example, using python’s ```numpy.polynomial()``` function or ```scikit-learn``` library would be considered as cheating.
+The objective is to implement a ```simple linear regression with a single feature```, _from scratch_. The choice of programming language is free, but should suitable for visualizing data. Using librairies is authorized, except for the ones that does all the work. For example, using python’s ```numpy.polynomial()``` function or ```scikit-learn``` library would be considered as cheating.
 
 ### Dataset to train
 
@@ -74,7 +75,7 @@ Librairies : The power of ```numpy```, a pinch of ```pandas``` and ```matplotlib
 
 #### Virtual environment
 
-a  _virtual environment_ is necessary so that python and its dependencies are running is an isolated manner, independently from python of the host machine. Virtualization with the help of ```Docker``` could be a way to do that in a more complex context. Here, only python installer ```pip```, ```python3``` and few libraries are needed.Thus, ```virtualenv``` is the most straightforward tool ([virtualenv doc.](https://virtualenv.pypa.io/en/latest/) and [python doccs](https://docs.python.org/3/tutorial/venv.html)) and can install a _virtual environment_  from these shell command :
+a  _virtual environment_ is necessary so that python and its dependencies are running in an isolated manner, independently from the "system" Python (the host machine).Virtualization with the help of ```Docker``` could be a way to do that in a more complex context. Here, only python installer ```pip```, ```python3``` and few libraries are needed.Thus, ```virtualenv``` is the most straightforward tool ([virtualenv doc.](https://virtualenv.pypa.io/en/latest/) and [python doccs](https://docs.python.org/3/tutorial/venv.html)), and can install a _virtual environment_  from these shell command :
 
 ```shell
 virtualenv ./venv/
@@ -113,7 +114,7 @@ Otherwise Activate of the virtual environment
 source /venv/bin/activate
 ```
 
-This will change the shell prompt, to `(venv)` and allow to directly use `venv/bin/`.
+This will change the shell prompt, to `(venv)` and allow to directly use `venv/bin/*`.
 Type only ```pip``` or ```python``` of the ```venv``` with only one word, no need for ```/venv/bin/``` prefix.
 
 ```shell
