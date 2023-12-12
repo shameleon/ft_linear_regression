@@ -1,5 +1,7 @@
 # ft_linear_regression
 
+<img src="./screenshots/bing-ft_linear_regression.jpg" alt="ML sorting hat" width=55% height=55%></img>
+
 42 school project **ft_linear_regression** could be seen as an entrypoint to the _data science_ branch of 42-school, in the ```outer-circle``` holygraph.
 This project is an introduction the field and does not have the pretention to be a fancy data science project.
 Machine learning modules, and any module doing the job, are forbidden.
@@ -180,9 +182,9 @@ partial_derivative[1] = np.mean(np.multiply(self.x, residual))
 self.theta -= self.alpha * partial_derivative
 ```
 
-Developped explanation are found here.
-![Formulas for Gradient descent](https://media.geeksforgeeks.org/wp-content/uploads/Cost-Function.jpg)]
-[geeksforgeeks.com : gradient descent in linear regression articles](https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/)
+Developped explanation are found here : [geeksforgeeks.com : gradient descent in linear regression articles](https://www.geeksforgeeks.org/gradient-descent-in-linear-regression/)
+
+![Formulas for Gradient descent](https://media.geeksforgeeks.org/wp-content/uploads/Cost-Function.jpg)
 
 #### In summary
 
